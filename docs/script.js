@@ -960,6 +960,7 @@ const startMoon = () => {
       if (currentTotalStars >= starGoal) {
         say("You've collected all the stars!");
         document.querySelector("#mho").style.opacity = 1;
+        zzfx(...[1.5,0,100,.06,1,.19,,3.6,,,100,.2,.5,,,,,.56,.18,,100]);
       } else {
         setTimeout(() => {
           starHolder.remove();

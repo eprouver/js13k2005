@@ -940,6 +940,7 @@ const startMoon = () => {
       if (currentTotalStars >= starGoal) {
         say("You've collected all the stars!");
         document.querySelector("#mho").style.opacity = 1;
+        zzfx(...[1.5,0,100,.06,1,.19,,3.6,,,100,.2,.5,,,,,.56,.18,,100]);
       } else {
         setTimeout(() => {
           starHolder.remove();
@@ -1145,7 +1146,7 @@ const startBoard = tileHolder => {
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
     if (rowNum + colNum < 4) {
       setTimeout(() => {
-        say("place cat on empty tile. Match tags to number of cats");
+        say("place cat on empty tile near charm. Tags number matches number of cats");
       }, 2000);
     }
 
