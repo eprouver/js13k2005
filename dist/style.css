@@ -1,4 +1,4 @@
-* {
+.screen, .screen * {
   transform-style: preserve-3d;
   perspective: 5000px;
   transform-origin: 50% 50%;
@@ -10,49 +10,16 @@ body {
   --boardRot: 50deg;
   --bopacity: 0.25;
   --baseTransition: 0.2s ease all;
-  --ease1: linear(
-    0,
-    -0.004 4.9%,
-    -0.02 9.4%,
-    -0.124 26.4%,
-    -0.126 30.5%,
-    -0.104 34.1%,
-    -0.027 38.8%,
-    0.108 43.1%,
-    0.299 47%,
-    0.817 55.2%,
-    0.97 59.1%,
-    1.071 63.4%,
-    1.118 67.7%,
-    1.127 72.6%,
-    1.108 77.2%,
-    1.019 90.7%,
-    1.004 95.2%,
-    1
-  );
+  --ease1: linear(0, -0.004 4.9%, -0.02 9.4%, -0.124 26.4%, -0.126 30.5%, -0.104 34.1%, -0.027 38.8%, 0.108 43.1%, 0.299 47%, 0.817 55.2%, 0.97 59.1%, 1.071 63.4%, 1.118 67.7%, 1.127 72.6%, 1.108 77.2%, 1.019 90.7%, 1.004 95.2%, 1);
   background: linear-gradient(0, #b8c6e4 0%, #13161e 70%, #13161e 100%);
-  display: flex;
-  flex-direction: column;
-  gap: 20vh;
+
 }
 
 .screen {
-  height: 100dvh;
-  width: 100dvw;
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
   contain: layout style paint;
-}
-
-#tunnel canvas {
-  mask: linear-gradient(
-    0deg,
-    transparent 0%,
-    white 10%,
-    white 90%,
-    transparent 100%
-  );
-  height: 160vh;
-  top: -25vh;
 }
 
 canvas {
@@ -89,7 +56,7 @@ canvas {
     0 0.3em 0.3em black;
   transition: all 0.1s ease;
   background: #ced9f2;
-  width: 20em;
+  min-width: 15em;
   margin: 0 auto;
 }
 
@@ -171,13 +138,8 @@ canvas {
 #ss {
   position: absolute;
   left: 50%;
-  top: 20%;
+  top: 50%;
   animation: undu 2s ease-in infinite alternate;
-}
-
-.st {
-  position: absolute;
-  
 }
 
 .star {
@@ -228,10 +190,6 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 3rem;
   height: 3rem;
   width: 3rem;
-}
-input[type="range"]:focus::-webkit-slider-thumb {
-  outline: #808080 solid 3px;
-  outline-offset: 0.125rem;
 }
 input[type="range"]::-moz-range-track {
   background-color: #b23aac;
@@ -408,26 +366,24 @@ svg {
 }
 
 .marker {
-  color: #ccc;
+  color: #c0c0c0;
   font-size: 2.6em;
   transform: translate(-0.1em, 0) rotate(-45deg) translate(0, -0.1em);
   line-height: 1em;
   width: 1.1em;
   transform-origin: 50% 50%;
-  background: #636363;
+  background: #4e525b;
   height: 1.1em;
-  text-shadow:
-    0 3px 10px #545454,
-    0 3px 1px #444;
+  text-shadow: 0 3px 10px #292d36, 0 3px 3px #292d36;
   border-radius: 0.5em;
   margin: 0.3em;
-  filter: drop-shadow(0 7px 0 #444);
   transition: var(--baseTransition);
+  box-shadow: 0 8px 0 1px #292d36, inset 0 -3px 5px #292d36;
 }
 
 .marker.fail {
   background: tomato;
-  filter: drop-shadow(0 7px 0 red);
+  box-shadow:0 8px 0 1px red, inset 0 -3px 5px red;
   text-shadow:
     0 3px 10px red,
     0 3px 1px red;
@@ -435,7 +391,7 @@ svg {
 
 .marker.correct {
   background: lime;
-  filter: drop-shadow(0 7px 0 green);
+  box-shadow:0 8px 0 1px green, inset 0 -3px 5px green;
 }
 
 .derot:not(:has(.toy)) {

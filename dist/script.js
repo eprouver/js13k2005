@@ -863,7 +863,7 @@ const { div, input, button, canvas } = van.tags;
 // Game Configuration - Easy to modify
 const GAME_CONFIG = {
   SKY_TIME_LIMIT: 30000, // Time in milliseconds (30 seconds) - Change this to adjust game length
-  STAR_SPAWN_INTERVAL: 100, // How often stars spawn (1 second)
+  STAR_SPAWN_INTERVAL: 400, // How often stars spawn (1 second)
 };
 
 let cRow = 1;
