@@ -3,6 +3,7 @@
   perspective: 5000px;
   transform-origin: 50% 50%;
   pointer-events: none;
+  text-align: center;
 }
 
 body {
@@ -41,7 +42,6 @@ canvas {
   top: 24%;
   width: 50%;
   left: 14%;
-  text-align: center;
   gap: 3em;
 }
 
@@ -123,7 +123,6 @@ canvas {
   position: fixed;
   bottom: 1em;
   width: 100vw;
-  padding: 0 4em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,7 +137,7 @@ canvas {
 #ss {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%;
   animation: undu 2s ease-in infinite alternate;
 }
 
@@ -208,15 +207,17 @@ svg {
   display: none;
 }
 
+#tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .holder {
-  --gap: 2.5%;
   display: grid;
   width: 80vmin;
-  margin: 10vh auto;
-  text-align: center;
-  gap: var(--gap);
-  transform: translate3d(0, -1em, 10em) rotateX(var(--boardRot)) rotate(45deg);
-  transform-origin: 50% 50%;
+  gap: 3.5%;
+  transform: translate3d(5vmin, 0, 10em) rotateX(var(--boardRot)) rotate(45deg);
   font-size: 2.3vmin;
   transition: all 1s ease;
 }
@@ -329,7 +330,7 @@ svg {
 
 .derot .c1 {
   left: 0em;
-  top: -5em;
+  top: -3em;
   position: relative;
 }
 
@@ -587,7 +588,6 @@ svg {
   font-size: 17vmin;
   transform: translateY(1em) rotate3d(-3.9, 2.4, 2.4, 45deg);
   width: 100%;
-  text-align: center;
   font-weight: bold;
   color: #25f8b3;
   text-shadow: 0 0 10px #25f8b3;

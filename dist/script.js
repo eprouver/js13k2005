@@ -857,7 +857,6 @@ const slowTiempo = () => {
   newMeasure();
 };
 
-
 const { div, input, button, canvas } = van.tags;
 
 // Game Configuration - Easy to modify
@@ -1690,10 +1689,6 @@ const startBoard = tileHolder => {
 
     const holder = div({
       class: "holder",
-      style: `
-grid-template-columns: repeat(${colNum + 1}, 1fr);
-grid-template-rows: repeat(${rowNum + 1}, 1fr);
-`,
     });
 
     grid = [...new Array(rowNum)].map(c => [...new Array(colNum)]);
