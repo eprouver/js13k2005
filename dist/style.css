@@ -37,9 +37,10 @@ body {
 }
 
 .screen {
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 #tunnel canvas {
@@ -63,7 +64,7 @@ canvas {
 }
 
 #start {
-  font-size: 1.5vw;
+  font-size: 1.5vmin;
 }
 
 #start .center {
@@ -180,7 +181,7 @@ canvas {
 }
 
 .star {
-  position: absolulte;
+  position: fixed;
   animation: shoot 6s ease-in 1 forwards;
   font-size: 3.4vmax;
 }
