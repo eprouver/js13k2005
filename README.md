@@ -1,6 +1,6 @@
-# sky cat
+# Celestial Paws
 
-A Pen created on CodePen.
+A submission for the js13k 2005 game jam.
 
-Original URL: [https://codepen.io/eprouver/pen/Byoxbgg](https://codepen.io/eprouver/pen/Byoxbgg).
+First version URL: [https://codepen.io/eprouver/pen/Byoxbgg](https://codepen.io/eprouver/pen/Byoxbgg).
 
