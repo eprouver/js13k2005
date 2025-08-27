@@ -13,7 +13,7 @@ function addCSSRulesToHead(cssRules) {
   
   document.head.appendChild(styleElement);
 }
-const css = `#sh,.screen{height:100vh}#start .center,#start-cat,#timer,canvas{position:absolute}#angler,#game,.screen{width:100vw}.cell,.holder{transition:1s}.cell *,.screen,.screen *{pointer-events:none}#range,.om,.reflect .c1,.screen,body{overflow:hidden}#mho,#timer{font-weight:700}#canvas-2,.cho{z-index:2}.screen,.screen *{transform-style:preserve-3d;perspective:5000px;transform-origin:50% 50%;text-align:center}body{--boardRot:50deg;--bopacity:0.25;--baseTransition:0.2s ease all;--ease1:linear(0, -0.004 4.9%, -0.02 9.4%, -0.124 26.4%, -0.126 30.5%, -0.104 34.1%, -0.027 38.8%, 0.108 43.1%, 0.299 47%, 0.817 55.2%, 0.97 59.1%, 1.071 63.4%, 1.118 67.7%, 1.127 72.6%, 1.108 77.2%, 1.019 90.7%, 1.004 95.2%, 1);background:linear-gradient(0,#b8c6e4 0,#13161e 70%,#13161e 100%)}.screen{contain:layout style paint}canvas{top:0;left:0;width:100%;height:100%}#start{font-size:1.5vmin}#start .center{display:flex;flex-direction:column;top:24%;width:50%;left:14%;gap:3em}#start button{pointer-events:auto;border-radius:1em;padding:1em;font-size:2em;border:none;box-shadow:0 .3em #9eacc9,0 .3em .3em #000;transition:.1s;background:#ced9f2;min-width:15em;margin:0 auto}#start button:active{box-shadow:0 .1em #9eacc9,0 .1em .1em #000;transform:translateY(.1em)}#start-cat{bottom:1.5em;right:16vw;font-size:4em;transform:scale(2.5)}#t{font-size:6em;width:200%;font-family:fantasy;text-align:left;transform:translate(-.4em,-.8em) rotateY(25deg);color:#39445c}#timer{top:20px;right:20px;color:#fff;font-size:24px}#game{position:relative;height:80vw}#p-cat,.platform{position:absolute}#p-cat{width:1em;height:2em;font-size:3em}.platform{width:140%;height:.3em;background:#b23aac;bottom:0;left:-20%}#angler,.star{position:fixed}#angler{bottom:1em;display:flex;justify-content:center;align-items:center}#ss,.cell>div{position:absolute}#angler input{width:50vw;min-width:600px;pointer-events:auto}#ss{left:50%;top:40%;animation:2s ease-in infinite alternate undu}.star{animation:6s ease-in forwards shoot;font-size:3.4vmax}.c1 *,.derot .c1,.milk .toy,.reflect .c1{position:relative}@keyframes shoot{0%{opacity:0;transform:scale(0) rotate(0) translateX(0);filter:blur(20px)}20%{opacity:.5;transform:scale(.5) rotate(30deg) translateX(3vmax)}40%{opacity:1;filter:blur(0)}100%{transform:scale(2) rotate(0) translateX(100vmax);filter:blur(0)}}input[type=range]{appearance:none;background:0 0;cursor:pointer;width:26rem;max-width:100%}input[type=range]:focus{outline:0}input[type=range]::-webkit-slider-runnable-track{background-color:#b23aac;border-radius:2.5rem;height:4rem}input[type=range]::-webkit-slider-thumb{appearance:none;margin-top:8px;background-color:#393939;border-radius:3rem;height:3rem;width:3rem}input[type=range]::-moz-range-track{background-color:#b23aac;border-radius:2.5rem;height:4rem}input[type=range]::-moz-range-thumb{background-color:#383838;border:none;border-radius:3rem;height:3rem;width:3rem}svg{display:none}#tile{display:flex;align-items:center;justify-content:center}.holder{display:grid;width:80vmin;gap:3.5%;transform:translate3d(5vmin,0,10em) rotateX(var(--boardRot)) rotate(45deg);font-size:2.3vmin}.holder.fail{transform:translateY(100vh)}@keyframes moveit{0%{transform:translateZ(100vh)}100%{transform:translateZ(0)}}@keyframes moveit-r{0%{transform:translateZ(0)}100%{transform:translateZ(100vh)}}.milk .toy{animation:3s ease-in-out infinite alternate hover;width:0;height:100%;font-size:.9em}.derot .toy{filter:drop-shadow(0 0 2px gold) drop-shadow(0 0 2px white)}.milk.fail .derot .toy{filter:sepia(10) saturate(10) hue-rotate(-45deg) drop-shadow(0 0 2px red) drop-shadow(0 0 2px red)}.reflect .toy{opacity:.65;left:-.5em;margin-top:-.5em}@keyframes hover{0%{transform:translateY(-.1em) rotate(10deg)}50%{transform:translateY(-.05em) rotate(-10deg)}100%{transform:translateY(0)}}.cell{aspect-ratio:1;line-height:2em;transform-origin:50% 50%;background-size:cover;animation:moveit 3s var(--ease1) 1 both}.cell:not(.milk,.cat){pointer-events:auto;cursor:pointer}.cell .derot{transform:translateZ(2em) rotate(-45deg) rotateX(calc(var(--boardRot) * -1)) translateY(1em);display:flex;justify-content:center}.cell .reflect{transform:translateZ(2em) rotate(-25deg) rotateX(calc(var(--boardRot))) translate3d(.5em,1.7em,.6em) scaleY(-2.3) scaleX(1.1);opacity:.5}.om{height:100%;width:100%}.reflect .c1{top:-3em;left:1em;width:20em;height:17em}.derot .c1{left:0;top:-3em}.cat.fail .derot{filter:invert(1) drop-shadow(0 0 2px red) drop-shadow(0 0 2px red) drop-shadow(0 0 2px red)}.cell:after,.cell:before{--thick:25px;content:"";position:absolute;width:101%;height:var(--thick);background:inherit;left:0;bottom:calc(var(--thick) * -.5);transform:rotateX(-90deg) translateY(calc(var(--thick) * .5)) scaleY(1);box-shadow:inset 0 0 20px hsl(0 0 0 / var(--bopacity))}.cell:after{left:calc(100% - (var(--thick) * .5));width:var(--thick);height:102%;bottom:0;transform:rotateY(90deg) translateX(calc(var(--thick) * .5)) scaleY(1)}.cat>div{filter:grayscale(1) brightness(.5)}.marker{color:silver;font-size:2.6em;transform:translate(-.1em,0) rotate(-45deg) translate(0,-.1em);line-height:1em;width:1.1em;transform-origin:50% 50%;background:#4e525b;height:1.1em;text-shadow:0 3px 10px #292d36,0 3px 3px #292d36;border-radius:.5em;margin:.3em;transition:var(--baseTransition);box-shadow:0 8px 0 1px #292d36,inset 0 -3px 5px #292d36}.marker.fail{background:tomato;box-shadow:0 8px 0 1px red,inset 0 -3px 5px red;text-shadow:0 3px 10px red,0 3px 1px red}.marker.correct{background:#0f0;box-shadow:0 8px 0 1px green,inset 0 -3px 5px green}.derot:not(:has(.toy)){width:100%;height:100%}.c1 div.tail-seg{height:2.5em;width:2.5em;left:1.5em;animation:5s ease-in-out infinite alternate wag;animation-delay:calc(var(--i) * 60ms);border-radius:1em;transform-origin:1em 1em}@keyframes wag{from{transform:rotateZ(-18deg)}to{transform:rotateZ(28deg)}}.body .tho{position:absolute;bottom:0;transform:rotateX(var(--boardRot))}.body .tail{position:absolute;left:3em;bottom:0;background:0 0}.c1{font-size:.11em;height:24em;filter:url(#goo);animation:.5s ease-in forwards scalein}@keyframes scalein{from{transform:scale(0) translateY(-100px)}to{transform:scale(1)}}.c1 *{background:#0a0a0a;transform-origin:0 0}.c1 .head{height:5em;width:7em;border-radius:12.6em 12.6em 20em 20em/12em 12em 8.5em 8.5em;top:2.5em}.c1 .head:after,.c1 .head:before{content:"";background:inherit;height:3em;width:1.5em;top:-2em;position:absolute;border-top-right-radius:100%;border-top-left-radius:10px;animation:8s ease-in-out infinite alternate ears;right:65%}@keyframes ears{100%,90%{top:-2em}95%{top:-1em}}.c1 .head:after{right:0;margin-right:1em}.c1 .body{border-radius:155px 105px 146px 146px/275px 275px 118px 118px;height:10em;width:8em;top:2em}.rm{border-top-left-radius:0;animation:.5s 3.5s both srow}.cm{border-top-right-radius:0;animation:.5s 3.5s both scol}.cell.rev{animation:2s both moveit-r}.cm.rev{animation:1s both scol-r}.rm.rev{animation:1s both srow-r}@keyframes srow{from{opacity:0;transform:translate(5em,0) rotate(-45deg)}to{transform:translate(0,0) rotate(-45deg)}}@keyframes srow-r{from{transform:translate(0,0) rotate(-45deg)}to{opacity:0;transform:translate(5em,0) rotate(-45deg)}}@keyframes scol{from{opacity:0;transform:translate(0,5em) rotate(-45deg)}to{transform:translate(0,0) rotate(-45deg)}}@keyframes scol-r{from{transform:translate(0,0) rotate(-45deg)}to{opacity:0;transform:translate(0,5em) rotate(-45deg)}}#range{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);width:300px;height:20px;background:rgba(255,255,255,.2);border-radius:10px;border:2px solid rgba(255,255,255,.5);z-index:3}#rani{height:100%;width:0%;background:#fff;border-radius:8px}#mho,.cho{width:100%;position:absolute}#mho{opacity:0;transition:opacity 3s var(--ease1);font-size:17vmin;transform:translateY(1em) rotate3d(-3.9,2.4,2.4,45deg);color:#25f8b3;text-shadow:0 0 10px #25f8b3}.moon-star{animation:1.5s ease-in-out infinite alternate twinkle}.cho{display:flex;font-size:6em;bottom:-1em;justify-content:space-around}@keyframes twinkle{0%{opacity:.7;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}.moon-star:hover{animation:none;transform:scale(1.3)!important;filter:drop-shadow(0 0 10px rgba(255, 215, 0, .8))}.collected{animation:1s ease-in-out forwards collect}@keyframes collect{from{opacity:0}to{opacity:1}}`;
+const css = `#sh,.sc{height:100vh}#start .center,#start-cat,#timer,canvas{position:absolute}#an,#game,.sc{width:100vw}#an,#tile{display:flex}.cell,.holder{transition:1s}.cell *,.sc,.sc *{pointer-events:none}#range,.om,.reflect .c1,.sc,body{overflow:hidden}#mho,#timer{font-weight:700}#canvas-2,.cho{z-index:2}*{padding:0;margin:0}.sc,.sc *{transform-style:preserve-3d;perspective:5000px;transform-origin:50% 50%;text-align:center}body{--boardRot:50deg;--bopacity:0.25;--baseTransition:0.2s ease all;--ease1:linear(0, -0.004 4.9%, -0.02 9.4%, -0.124 26.4%, -0.126 30.5%, -0.104 34.1%, -0.027 38.8%, 0.108 43.1%, 0.299 47%, 0.817 55.2%, 0.97 59.1%, 1.071 63.4%, 1.118 67.7%, 1.127 72.6%, 1.108 77.2%, 1.019 90.7%, 1.004 95.2%, 1);background:linear-gradient(0,#b8c6e4 0,#13161e 70%,#13161e 100%)}.sc{contain:layout style paint}canvas{top:0;left:0;width:100%;height:100%}#start{box-shadow:inset 0 -11vh #7f899f;font-size:1.5vmin}#start .center{display:flex;flex-direction:column;top:24%;width:50%;left:14%;gap:3em}#start button{pointer-events:auto;border-radius:1em;padding:1em;font-size:2em;border:none;box-shadow:0 .3em #9eacc9,0 .3em .3em #000;transition:.1s;background:#ced9f2;min-width:15em;margin:0 auto}#start button:active{box-shadow:0 .1em #9eacc9,0 .1em .1em #000;transform:translateY(.1em)}#start-cat{bottom:1.5em;right:16vw;font-size:4em;transform:scale(2.5)}#t{font-size:7em;width:200%;font-family:fantasy;text-align:left;transform:translate(-.7em,-.8em) rotateY(25deg);color:#39445c}#timer{top:20px;right:20px;color:#fff;font-size:24px}#game{position:relative;height:80vw}#p-cat,.platform{position:absolute}#p-cat{width:1em;height:2em;font-size:3em}.platform{width:140%;height:.3em;background:#b23aac;bottom:0;left:-20%}#an,.star{position:fixed}#an{bottom:1em;justify-content:center;align-items:center}#ss,.cell>div{position:absolute}#an input{width:50vw;min-width:600px;pointer-events:auto}#ss{left:50%;top:40%;animation:2s ease-in infinite alternate undu}.star{animation:6s ease-in forwards shoot;font-size:3.4vmax}.c1 *,.derot .c1,.milk .toy,.reflect .c1{position:relative}@keyframes shoot{0%{opacity:0;transform:scale(0) rotate(0) translateX(0);filter:blur(20px)}20%{opacity:.5;transform:scale(.5) rotate(30deg) translateX(3vmax)}40%{opacity:1;filter:blur(0)}100%{transform:scale(2) rotate(0) translateX(100vmax);filter:blur(0)}}input[type=range]{appearance:none;background:0 0;cursor:pointer;width:26rem;max-width:100%}input[type=range]:focus{outline:0}input[type=range]::-webkit-slider-runnable-track{background-color:#b23aac;border-radius:2.5rem;height:4rem}input[type=range]::-webkit-slider-thumb{appearance:none;margin-top:8px;background-color:#393939;border-radius:3rem;height:3rem;width:3rem}input[type=range]::-moz-range-track{background-color:#b23aac;border-radius:2.5rem;height:4rem}input[type=range]::-moz-range-thumb{background-color:#383838;border:none;border-radius:3rem;height:3rem;width:3rem}svg{display:none}#tile{align-items:center;justify-content:center}.holder{display:grid;width:80vmin;gap:3.5%;transform:translate3d(5vmin,0,10em) rotateX(var(--boardRot)) rotate(45deg);font-size:2.3vmin}.holder.fail{transform:translateY(100vh)}@keyframes moveit{0%{transform:translateZ(100vh)}100%{transform:translateZ(0)}}@keyframes moveit-r{0%{transform:translateZ(0)}100%{transform:translateZ(100vh)}}.milk .toy{animation:3s ease-in-out infinite alternate hover;width:0;height:100%;font-size:.9em}.derot .toy{filter:drop-shadow(0 0 2px gold) drop-shadow(0 0 2px white)}.milk.fail .derot .toy{filter:sepia(10) saturate(10) hue-rotate(-45deg) drop-shadow(0 0 2px red) drop-shadow(0 0 2px red)}.reflect .toy{opacity:.65;left:-.5em;margin-top:-.5em}@keyframes hover{0%{transform:translateY(-.1em) rotate(10deg)}50%{transform:translateY(-.05em) rotate(-10deg)}100%{transform:translateY(0)}}.cell{aspect-ratio:1;line-height:2em;transform-origin:50% 50%;background-size:cover;animation:moveit 3s var(--ease1) 1 both}.cell:not(.milk,.cat){pointer-events:auto;cursor:pointer}.cell .derot{transform:translateZ(2em) rotate(-45deg) rotateX(calc(var(--boardRot) * -1)) translateY(1em);display:flex;justify-content:center}.cell .reflect{transform:translateZ(2em) rotate(-25deg) rotateX(calc(var(--boardRot))) translate3d(.5em,1.7em,.6em) scaleY(-2.3) scaleX(1.1);opacity:.5}.om{height:100%;width:100%}.reflect .c1{top:-3em;left:1em;width:20em;height:17em}.derot .c1{left:0;top:-3em}.cat.fail .derot{filter:invert(1) drop-shadow(0 0 2px red) drop-shadow(0 0 2px red) drop-shadow(0 0 2px red)}.cell:after,.cell:before{--thick:25px;content:"";position:absolute;width:101%;height:var(--thick);background:inherit;left:0;bottom:calc(var(--thick) * -.5);transform:rotateX(-90deg) translateY(calc(var(--thick) * .5)) scaleY(1);box-shadow:inset 0 0 20px hsl(0 0 0 / var(--bopacity))}.cell:after{left:calc(100% - (var(--thick) * .5));width:var(--thick);height:102%;bottom:0;transform:rotateY(90deg) translateX(calc(var(--thick) * .5)) scaleY(1)}.cat>div{filter:grayscale(1) brightness(.5)}.marker{color:silver;font-size:2.6em;transform:translate(-.1em,0) rotate(-45deg) translate(0,-.1em);line-height:1em;width:1.1em;transform-origin:50% 50%;background:#4e525b;height:1.1em;text-shadow:0 3px 10px #292d36,0 3px 3px #292d36;border-radius:.5em;margin:.3em;transition:var(--baseTransition);box-shadow:0 8px 0 1px #292d36,inset 0 -3px 5px #292d36}.marker.fail{background:tomato;box-shadow:0 8px 0 1px red,inset 0 -3px 5px red;text-shadow:0 3px 10px red,0 3px 1px red}.marker.correct{background:#0f0;box-shadow:0 8px 0 1px green,inset 0 -3px 5px green}.derot:not(:has(.toy)){width:100%;height:100%}.c1 div.tail-seg{height:2.5em;width:2.5em;left:1.5em;animation:5s ease-in-out infinite alternate wag;animation-delay:calc(var(--i) * 60ms);border-radius:1em;transform-origin:1em 1em}@keyframes wag{from{transform:rotateZ(-18deg)}to{transform:rotateZ(28deg)}}.body .tho{position:absolute;bottom:0;transform:rotateX(var(--boardRot))}.body .tail{position:absolute;left:3em;bottom:0;background:0 0}.c1{font-size:.11em;height:24em;filter:url(#goo);animation:.5s ease-in forwards scalein}@keyframes scalein{from{transform:scale(0) translateY(-100px)}to{transform:scale(1)}}.c1 *{background:#0a0a0a;transform-origin:0 0}.c1 .head{height:5em;width:7em;border-radius:12.6em 12.6em 20em 20em/12em 12em 8.5em 8.5em;top:2.5em}.c1 .head:after,.c1 .head:before{content:"";background:inherit;height:3em;width:1.5em;top:-2em;position:absolute;border-top-right-radius:100%;border-top-left-radius:10px;animation:8s ease-in-out infinite alternate ears;right:65%}@keyframes ears{100%,90%{top:-2em}95%{top:-1em}}.c1 .head:after{right:0;margin-right:1em}.c1 .body{border-radius:155px 105px 146px 146px/275px 275px 118px 118px;height:10em;width:8em;top:2em}.rm{border-top-left-radius:0;animation:.5s 3.5s both srow}.cm{border-top-right-radius:0;animation:.5s 3.5s both scol}.cell.rev{animation:2s both moveit-r}.cm.rev{animation:1s both scol-r}.rm.rev{animation:1s both srow-r}@keyframes srow{from{opacity:0;transform:translate(5em,0) rotate(-45deg)}to{transform:translate(0,0) rotate(-45deg)}}@keyframes srow-r{from{transform:translate(0,0) rotate(-45deg)}to{opacity:0;transform:translate(5em,0) rotate(-45deg)}}@keyframes scol{from{opacity:0;transform:translate(0,5em) rotate(-45deg)}to{transform:translate(0,0) rotate(-45deg)}}@keyframes scol-r{from{transform:translate(0,0) rotate(-45deg)}to{opacity:0;transform:translate(0,5em) rotate(-45deg)}}#range{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);width:300px;height:20px;background:rgba(255,255,255,.2);border-radius:10px;border:2px solid rgba(255,255,255,.5);z-index:3}#rani{height:100%;width:0%;background:#fff;border-radius:8px}#mho,.cho{width:100%;position:absolute}#mho{opacity:0;transition:opacity 3s var(--ease1);font-size:17vmin;transform:translateY(1em) rotate3d(-3.9,2.4,2.4,45deg);color:#25f8b3;text-shadow:0 0 10px #25f8b3}.cho{display:flex;font-size:6em;bottom:-1em;justify-content:space-around}.moon-star:hover{animation:none;transform:scale(1.3)!important;filter:drop-shadow(0 0 10px rgba(255, 215, 0, .8))}.collected{animation:1s ease-in-out forwards collect}@keyframes collect{from{opacity:0}to{opacity:1}}`;
 
 
 addCSSRulesToHead(css);
@@ -312,23 +312,6 @@ let defaultSettings = {
   doubleDrum: 1,
 };
 
-
-const newSettings = () => {
-  const tempo = 100;
-  defaultSettings = {
-    ...defaultSettings,
-    instrument: instruments[~~(R() * instruments.length)],
-    scale: Object.keys(scales).sort(() => R() - 0.5)[0],
-    tempo,
-    drumType: drums[~~(R() * drums.length)],
-    drumType2: drums[~~(R() * drums.length)],
-    baseNote: ~~(R() * 60) + 40,
-    drumPattern: drumPatterns[~~(R() * drumPatterns.length)],
-    doubleDrum: tempo < 60 ? 2 : 1,
-    measures: [],
-  };
-};
-
 const getFrequency = (
   { scale = "chromatic", degree = 1, octave = 4 },
   settings = defaultSettings
@@ -542,7 +525,7 @@ const startPlayback = (settings = defaultSettings) => {
     bufferSource = audioContext.createBufferSource();
     bufferSource.buffer = audioBuffer;
     masterGain = audioContext.createGain();
-    masterGain.gain.value = 0.5;
+    masterGain.gain.value = 0.8;
     // volumeSlider && volumeSlider.value ? parseFloat(volumeSlider.value) : 1; // global volume
 
     // convolver with inline IR
@@ -863,6 +846,19 @@ const startMusic = () => {
 const stopMusic = () => {
   playing = false;
   resetAudio();
+  const tempo = 100;
+  defaultSettings = {
+    ...defaultSettings,
+    instrument: instruments[~~(R() * instruments.length)],
+    scale: Object.keys(scales).sort(() => R() - 0.5)[0],
+    tempo,
+    drumType: drums[~~(R() * drums.length)],
+    drumType2: drums[~~(R() * drums.length)],
+    baseNote: ~~(R() * 60) + 40,
+    drumPattern: drumPatterns[~~(R() * drumPatterns.length)],
+    doubleDrum: tempo < 60 ? 2 : 1,
+    measures: [],
+  };
 };
 
 const doubleTiempo = () => {
@@ -955,12 +951,11 @@ const startMoon = () => {
     );
   }
 
+  say(`${currentTotalStars + starsCollected} of ${starGoal} stars collected`);
+
   setTimeout(
     () => {
-      say(`${currentTotalStars} of ${starGoal} stars collected`);
-
       starsCollected = 0;
-      
 
       if (currentTotalStars >= starGoal) {
         say("You've collected all the stars!");
@@ -970,13 +965,12 @@ const startMoon = () => {
           starHolder.remove();
           stopMusic();
           tile.scrollIntoView({ behavior: 'smooth' });
-          newSettings();
 
           setTimeout(() => {
             startBoard(tile);
             startMusic();
           }, 1000);
-        }, 6000);
+        }, 4500);
       }
     },
     starsCollected * 50 + 1000
@@ -1027,7 +1021,7 @@ const startSky = holder => {
   const board = div(
     { id: "sh" },
     div({ id: "game" }, cat, starStart),
-    div({ id: "angler" }, slider),
+    div({ id: "an" }, slider),
     timerDisplay
   );
 
@@ -1140,29 +1134,7 @@ const startSky = holder => {
     const checkCollision = () => {
       if (hit(ss.getBoundingClientRect(), cat.getBoundingClientRect())) {
         // Play sound effect when collecting stars
-        zzfx(
-          0.7,
-          0.05,
-          699,
-          0.02,
-          0.05,
-          0.13,
-          0,
-          0.5,
-          0,
-          0,
-          336,
-          0.1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0.72,
-          0.02,
-          0,
-          556
-        );
+        zzfx(...[,0,1500,.02,,.2,,2,1,3,230,.1,,.1,,,,.8]);
 
         // Remove star but don't affect progression
         star.parentElement.removeChild(star);
@@ -1178,7 +1150,7 @@ const startSky = holder => {
     // Continue spawning stars until time runs out
     if (skyRound) {
       requestAnimationFrame(() => {
-        setTimeout(newStar, Math.max(100, GAME_CONFIG.STAR_SPAWN_INTERVAL));
+        setTimeout(newStar, Math.max(100, GAME_CONFIG.STAR_SPAWN_INTERVAL++));
       });
     }
   };
@@ -1193,7 +1165,7 @@ const startBoard = tileHolder => {
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
     if (rowNum + colNum < 4) {
       setTimeout(() => {
-        say("place cat on empty tile");
+        say("place cat on empty tile. Match tags to number of cats");
       }, 2000);
     }
 
@@ -1874,7 +1846,7 @@ const startBoard = tileHolder => {
 const rangeInner = div({ id: "rani" });
 const skyHolder = div();
 const moon = div(
-  { id: "moon", class: "screen" },
+  { id: "moon", class: "sc" },
   div({ id: "mho" }, "Winner!"),
   canvas({ id: "canvas-2" }),
   div(
@@ -1883,15 +1855,15 @@ const moon = div(
   ),
 );
 const tunnel = div(
-  { id: "tunnel", class: "screen" },
+  { id: "tunnel", class: "sc" },
   canvas({ id: "canvas-1" }),
   skyHolder
 );
-const tile = div({ id: "tile", class: "screen" });
+const tile = div({ id: "tile", class: "sc" });
 const start = div(
   {
     id: "start",
-    class: "screen",
+    class: "sc",
   },
   div(
     { class: "center" },

@@ -292,23 +292,6 @@ let defaultSettings = {
   doubleDrum: 1,
 };
 
-
-const newSettings = () => {
-  const tempo = 100;
-  defaultSettings = {
-    ...defaultSettings,
-    instrument: instruments[~~(R() * instruments.length)],
-    scale: Object.keys(scales).sort(() => R() - 0.5)[0],
-    tempo,
-    drumType: drums[~~(R() * drums.length)],
-    drumType2: drums[~~(R() * drums.length)],
-    baseNote: ~~(R() * 60) + 40,
-    drumPattern: drumPatterns[~~(R() * drumPatterns.length)],
-    doubleDrum: tempo < 60 ? 2 : 1,
-    measures: [],
-  };
-};
-
 const getFrequency = (
   { scale = "chromatic", degree = 1, octave = 4 },
   settings = defaultSettings
@@ -522,7 +505,7 @@ const startPlayback = (settings = defaultSettings) => {
     bufferSource = audioContext.createBufferSource();
     bufferSource.buffer = audioBuffer;
     masterGain = audioContext.createGain();
-    masterGain.gain.value = 0.5;
+    masterGain.gain.value = 0.8;
     // volumeSlider && volumeSlider.value ? parseFloat(volumeSlider.value) : 1; // global volume
 
     // convolver with inline IR
@@ -843,6 +826,19 @@ const startMusic = () => {
 const stopMusic = () => {
   playing = false;
   resetAudio();
+  const tempo = 100;
+  defaultSettings = {
+    ...defaultSettings,
+    instrument: instruments[~~(R() * instruments.length)],
+    scale: Object.keys(scales).sort(() => R() - 0.5)[0],
+    tempo,
+    drumType: drums[~~(R() * drums.length)],
+    drumType2: drums[~~(R() * drums.length)],
+    baseNote: ~~(R() * 60) + 40,
+    drumPattern: drumPatterns[~~(R() * drumPatterns.length)],
+    doubleDrum: tempo < 60 ? 2 : 1,
+    measures: [],
+  };
 };
 
 const doubleTiempo = () => {
@@ -935,12 +931,11 @@ const startMoon = () => {
     );
   }
 
+  say(`${currentTotalStars + starsCollected} of ${starGoal} stars collected`);
+
   setTimeout(
     () => {
-      say(`${currentTotalStars} of ${starGoal} stars collected`);
-
       starsCollected = 0;
-      
 
       if (currentTotalStars >= starGoal) {
         say("You've collected all the stars!");
@@ -950,13 +945,12 @@ const startMoon = () => {
           starHolder.remove();
           stopMusic();
           tile.scrollIntoView({ behavior: 'smooth' });
-          newSettings();
 
           setTimeout(() => {
             startBoard(tile);
             startMusic();
           }, 1000);
-        }, 6000);
+        }, 4500);
       }
     },
     starsCollected * 50 + 1000
@@ -1007,7 +1001,7 @@ const startSky = holder => {
   const board = div(
     { id: "sh" },
     div({ id: "game" }, cat, starStart),
-    div({ id: "angler" }, slider),
+    div({ id: "an" }, slider),
     timerDisplay
   );
 
@@ -1120,29 +1114,7 @@ const startSky = holder => {
     const checkCollision = () => {
       if (hit(ss.getBoundingClientRect(), cat.getBoundingClientRect())) {
         // Play sound effect when collecting stars
-        zzfx(
-          0.7,
-          0.05,
-          699,
-          0.02,
-          0.05,
-          0.13,
-          0,
-          0.5,
-          0,
-          0,
-          336,
-          0.1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0.72,
-          0.02,
-          0,
-          556
-        );
+        zzfx(...[,0,1500,.02,,.2,,2,1,3,230,.1,,.1,,,,.8]);
 
         // Remove star but don't affect progression
         star.parentElement.removeChild(star);
@@ -1158,7 +1130,7 @@ const startSky = holder => {
     // Continue spawning stars until time runs out
     if (skyRound) {
       requestAnimationFrame(() => {
-        setTimeout(newStar, Math.max(100, GAME_CONFIG.STAR_SPAWN_INTERVAL));
+        setTimeout(newStar, Math.max(100, GAME_CONFIG.STAR_SPAWN_INTERVAL++));
       });
     }
   };
@@ -1173,7 +1145,7 @@ const startBoard = tileHolder => {
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
     if (rowNum + colNum < 4) {
       setTimeout(() => {
-        say("place cat on empty tile");
+        say("place cat on empty tile. Match tags to number of cats");
       }, 2000);
     }
 
@@ -1854,7 +1826,7 @@ const startBoard = tileHolder => {
 const rangeInner = div({ id: "rani" });
 const skyHolder = div();
 const moon = div(
-  { id: "moon", class: "screen" },
+  { id: "moon", class: "sc" },
   div({ id: "mho" }, "Winner!"),
   canvas({ id: "canvas-2" }),
   div(
@@ -1863,15 +1835,15 @@ const moon = div(
   ),
 );
 const tunnel = div(
-  { id: "tunnel", class: "screen" },
+  { id: "tunnel", class: "sc" },
   canvas({ id: "canvas-1" }),
   skyHolder
 );
-const tile = div({ id: "tile", class: "screen" });
+const tile = div({ id: "tile", class: "sc" });
 const start = div(
   {
     id: "start",
-    class: "screen",
+    class: "sc",
   },
   div(
     { class: "center" },
