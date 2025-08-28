@@ -858,7 +858,7 @@ const { div, input, button, canvas } = van.tags;
 // Game Configuration - Easy to modify
 const GAME_CONFIG = {
   SKY_TIME_LIMIT: 30000, // Time in milliseconds (30 seconds) - Change this to adjust game length
-  STAR_SPAWN_INTERVAL: 400, // How often stars spawn (1 second)
+  STAR_SPAWN_INTERVAL: 500, // How often stars spawn (1 second)
 };
 
 let cRow = 1;
@@ -940,7 +940,6 @@ const startMoon = () => {
       if (currentTotalStars >= starGoal) {
         say("You've collected all the stars!");
         document.querySelector("#mho").style.opacity = 1;
-        zzfx(...[1.5,0,100,.06,1,.19,,3.6,,,100,.2,.5,,,,,.56,.18,,100]);
       } else {
         setTimeout(() => {
           starHolder.remove();
@@ -960,7 +959,7 @@ const startMoon = () => {
 
 const startSky = holder => {
   if (currentTotalStars === 0) {
-    say("Steer cat to collect stars");
+    say("Move the circle and collect the stars");
   }
   sourceIndex = 0;
   paused = false;
@@ -1146,7 +1145,7 @@ const startBoard = tileHolder => {
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
     if (rowNum + colNum < 4) {
       setTimeout(() => {
-        say("place cat on empty tile near charm. Tags number matches number of cats");
+        say("Pair each charm with a cat. Tag number shows the number of cats per line");
       }, 2000);
     }
 
@@ -1209,7 +1208,10 @@ const startBoard = tileHolder => {
       placed += 1;
 
       if (placed === target) {
-        holder.style.setProperty("--bopacity", 1);
+        [...document.getElementsByClassName("cell")].forEach(c => {
+          c.style.setProperty("--bopacity", 1);
+        });
+
         setTimeout(async () => {
           let colCorrect;
           let rowCorrect;
@@ -1332,6 +1334,7 @@ const startBoard = tileHolder => {
                 .forEach(c => {
                   c.offsetWidth;
                   c.classList.add("rev");
+                  c.style.pointerEvents = "none";
                 });
 
               setTimeout(() => {
@@ -1377,7 +1380,8 @@ const startBoard = tileHolder => {
             }, 400);
           } else {
             // failure
-            GAME_CONFIG.STAR_SPAWN_INTERVAL += 400;
+            say('unlucky');
+            GAME_CONFIG.STAR_SPAWN_INTERVAL += 200;
             [...document.querySelectorAll(".cell")].forEach(cell =>
               cell.style.setProperty("pointer-events", "none")
             );
@@ -1556,7 +1560,7 @@ const startBoard = tileHolder => {
               if (cRow > cCol) cRow--;
               else cCol--;
             } else {
-              cDif -= 0.1;
+              cDif -= 0.15;
               if (cDif < 0.2) {
                 if (cRow > cCol) cRow--;
                 else cCol--;
@@ -1743,31 +1747,7 @@ const startBoard = tileHolder => {
               S[row][col] !== 1 &&
               !grid[row][col].classList.contains("cat")
             ) {
-              zzfx(
-                ...[
-                  10,
-                  0.5,
-                  161.6256,
-                  0.04,
-                  0.58,
-                  0.16,
-                  ,
-                  2.7,
-                  ,
-                  ,
-                  ,
-                  ,
-                  ,
-                  ,
-                  ,
-                  ,
-                  0.18,
-                  0.73,
-                  0.02,
-                  ,
-                  645,
-                ]
-              );
+              zzfx(...[2,0,261.6256,.01,.33,.07,1,1.9,,,,,,.1,,,.17,.62,.06]);
 
               grid[row][col].classList.add("cat");
               grid[row][col].style.setProperty("--bopacity", 1);
@@ -1780,6 +1760,11 @@ const startBoard = tileHolder => {
               );
 
               testFinished();
+            } else if (grid[row][col].classList.contains("cat")) {
+              grid[row][col].innerHTML = "";
+              grid[row][col].classList.remove("cat");
+              grid[row][col].style.setProperty("--bopacity", 0.25);
+              placed -= 1;
             }
           },
         });
@@ -1828,7 +1813,7 @@ const rangeInner = div({ id: "rani" });
 const skyHolder = div();
 const moon = div(
   { id: "moon", class: "sc" },
-  div({ id: "mho" }, "Winner!"),
+  div({ id: "mho" }, "You Win!"),
   canvas({ id: "canvas-2" }),
   div(
     { class: "cho" },
