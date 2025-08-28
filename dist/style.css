@@ -14,11 +14,11 @@
 
 body {
   overflow: hidden;
+  --plat: #8d48ac;
   --boardRot: 50deg;
-  --bopacity: 0.25;
   --baseTransition: 0.2s ease all;
-  --ease1: linear(0, -0.004 4.9%, -0.02 9.4%, -0.124 26.4%, -0.126 30.5%, -0.104 34.1%, -0.027 38.8%, 0.108 43.1%, 0.299 47%, 0.817 55.2%, 0.97 59.1%, 1.071 63.4%, 1.118 67.7%, 1.127 72.6%, 1.108 77.2%, 1.019 90.7%, 1.004 95.2%, 1);
-  background: linear-gradient(0, #b8c6e4 0%, #13161e 70%, #13161e 100%);
+  --ease1: cubic-bezier(0.329, 1.451, 0.54, 1.007);
+  background: linear-gradient(0, #d0dfff 0%, #13161e 70%, #13161e 100%);
 }
 
 .sc {
@@ -53,16 +53,13 @@ canvas {
 
 #start button {
   pointer-events: auto;
-  border-radius: 1em;
-  padding: 1em;
+  border-radius: 2em;
+  padding: 1em 7em;
   font-size: 2em;
   border: none;
-  box-shadow:
-    0 0.3em #9eacc9,
-    0 0.3em 0.3em #4a546b;
+  box-shadow: 0 0.3em #8893aa, 0 0.4em 0.3em #565d6b;
   transition: all 0.1s ease;
   background: #ced9f2;
-  min-width: 15em;
   margin: 0 auto;
 }
 
@@ -82,7 +79,7 @@ canvas {
 }
 
 #t {
-  font-size: 7em;
+  font-size: 6.3em;
   width: 200%;
   font-family: fantasy;
   text-align: left;
@@ -96,11 +93,10 @@ canvas {
 
 #timer {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
+  top: 0.5em;
+  right: 0.5em;
+  color: #fff4af;
+  font-size: 3em;
 }
 
 #game {
@@ -120,9 +116,10 @@ canvas {
   position: absolute;
   width: 140%;
   height: 0.3em;
-  background: #b23aac;
+  background: var(--plat);
   bottom: 0;
   left: -20%;
+  border-radius: 3rem;
 }
 
 #an {
@@ -148,6 +145,7 @@ canvas {
 }
 
 .star {
+  color:#fff4af;
   position: fixed;
   animation: shoot 6s ease-in 1 forwards;
   font-size: 3.4vmax;
@@ -184,7 +182,7 @@ input[type="range"]:focus {
   outline: 0;
 }
 input[type="range"]::-webkit-slider-runnable-track {
-  background-color: #b23aac;
+  background-color: var(--plat);
   border-radius: 2.5rem;
   height: 4rem;
 }
@@ -197,7 +195,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 3rem;
 }
 input[type="range"]::-moz-range-track {
-  background-color: #b23aac;
+  background-color: var(--plat);
   border-radius: 2.5rem;
   height: 4rem;
 }
@@ -286,10 +284,8 @@ svg {
 
 .cell {
   aspect-ratio: 1;
-  line-height: 2em;
   transform-origin: 50% 50%;
-  background-size: cover;
-  animation: moveit 3s var(--ease1) 1 both;
+  animation: moveit 2s var(--ease1) 1 both;
   transition: all 1s ease;
 }
 
@@ -347,7 +343,7 @@ svg {
 
 .cell:before,
 .cell:after {
-  --thick: 25px;
+  --thick: 0.4em;
   content: "";
   position: absolute;
   width: 101%;
@@ -357,7 +353,7 @@ svg {
   left: 0;
   bottom: calc(var(--thick) * -0.5);
   transform: rotateX(-90deg) translateY(calc(var(--thick) * 0.5)) scaleY(1);
-  box-shadow: inset 0 0 20px hsl(0 0 0 / var(--bopacity));
+  box-shadow: inset 0 0 20px hsl(0 0 0 / var(--bop));
 }
 
 .cell:after {
@@ -505,16 +501,16 @@ svg {
 
 .rm {
   border-top-left-radius: 0;
-  animation: srow 0.5s 3.5s ease 1 both;
+  animation: srow 0.5s 2.2s ease 1 both;
 }
 
 .cm {
   border-top-right-radius: 0;
-  animation: scol 0.5s 3.5s ease 1 both;
+  animation: scol 0.5s 2.2s ease 1 both;
 }
 
 .cell.rev {
-  animation: moveit-r 2s ease both;
+  animation: moveit-r 1.5s ease both;
 }
 
 .cm.rev {
@@ -585,6 +581,7 @@ svg {
   width: 0%;
   background: white;
   border-radius: 8px;
+  overflow: hidden;
 }
 
 #mho {

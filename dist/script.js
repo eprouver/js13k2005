@@ -237,11 +237,11 @@ function render() {
     });
 
     const { canvas: canvas1, gl, progDraw, bufObj } = sources[sourceIndex];
+    canvas1.width = window.innerWidth;
+    canvas1.height = window.innerHeight;
     canvas1.style.display = "block";
 
-    const size = Math.min(canvas1.clientWidth, canvas1.clientHeight);
-
-    gl.viewport(0, 0, size,size);
+    gl.viewport(0, 0, canvas1.width,canvas1.height);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.uniform1f(progDraw.iTime, elapsed);
@@ -363,7 +363,6 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
   switch (settings.instrument) {
     case "meow":
     case "springy":
-      // 1) Pitch glide in semitones: slight up then down
       let semi;
       if (u < 0.35)
         semi = lerp(-2, +6, u / 0.35); // rise
@@ -374,13 +373,11 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
         Math.sin(2 * Math.PI * 5 * t); // ±2% at 5 Hz
       const instFreq = frequency * Math.pow(2, semi / 12) * (1 + vib);
 
-      // 2) Vowel formants morph (rough cat-ish: /i/ -> /aʊ/)
       const F1 = lerp(500, 900, u); // formant 1 (Hz)
       const F2 = lerp(1800, 1100, u); // formant 2 (Hz)
       const BW1 = 120,
         BW2 = 180; // bandwidths
 
-      // 3) Build harmonic series, weight each harmonic by proximity to formants
       let s = 0,
         norm = 0;
       const H = 12; // number of harmonics (tradeoff cpu vs quality)
@@ -392,17 +389,11 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
       }
       s = norm > 0 ? s / norm : 0;
 
-      // 4) Nasal/noisy onset for the 'm' (first ~60 ms)
       const mDur = 0.06; // seconds
       const mAmt = Math.max(0, 1 - t / mDur); // fades out quickly
       const mNoise = (R() * 2 - 1) * 0.15 * mAmt;
 
       rawSample = 0.9 * s + mNoise;
-      break;
-
-    case "triangle":
-      rawSample =
-        2 * Math.abs(2 * (t * frequency - Math.floor(t * frequency + 0.5))) - 1;
       break;
 
     case "organ":
@@ -431,8 +422,10 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
       rawSample = 0.25 * Math.sin(2 * Math.PI * frequency * t + modulator);
       break;
 
+    case "triangle":
     default:
-      rawSample = Math.sin(omega * t);
+      rawSample =
+      2 * Math.abs(2 * (t * frequency - Math.floor(t * frequency + 0.5))) - 1;
       break;
   }
 
@@ -855,10 +848,10 @@ const slowTiempo = () => {
 
 const { div, input, button, canvas } = van.tags;
 
-// Game Configuration - Easy to modify
+// Tunnel Configuration
 const GAME_CONFIG = {
-  SKY_TIME_LIMIT: 30000, // Time in milliseconds (30 seconds) - Change this to adjust game length
-  STAR_SPAWN_INTERVAL: 500, // How often stars spawn (1 second)
+  SKY_TIME_LIMIT: 25000, // Game Length
+  STAR_SPAWN_INTERVAL: 600, // How often stars spawn
 };
 
 let cRow = 1;
@@ -871,7 +864,7 @@ let starsCollected = 0;
 let currentTotalStars = 0;
 
 const Tail = (count = 8) => {
-  let inner = null; // innermost segment
+  let inner;
   for (let i = count - 1; i >= 0; i--) {
     // outermost gets --i:0
     inner = div({ class: "tail-seg", style: `--i:${i}` }, inner);
@@ -902,7 +895,7 @@ function say(text, voice) {
 const startMoon = () => {
   sourceIndex = 1;
   paused = false;
-  GAME_CONFIG.STAR_SPAWN_INTERVAL = 800;
+  GAME_CONFIG.STAR_SPAWN_INTERVAL = 600;
   moon.scrollIntoView({ behavior: 'smooth' });
   slowTiempo();
 
@@ -931,6 +924,7 @@ const startMoon = () => {
     );
   }
 
+  rangeInner.innerText = currentTotalStars + starsCollected;
   say(`${currentTotalStars + starsCollected} of ${starGoal} stars collected`);
 
   setTimeout(() => {
@@ -1062,12 +1056,8 @@ const startSky = holder => {
   const startTime = Date.now();
   const updateTimer = () => {
     if (!skyRound) return;
-
-    const elapsed = Date.now() - startTime;
-    const remaining = Math.max(0, GAME_CONFIG.SKY_TIME_LIMIT - elapsed);
-    const seconds = Math.ceil(remaining / 1000);
-
-    timerDisplay.textContent = `${seconds}s`;
+    const remaining = Math.max(0, GAME_CONFIG.SKY_TIME_LIMIT - (Date.now() - startTime));
+    timerDisplay.textContent = `${Math.ceil(remaining / 1000)}`;
 
     if (remaining > 0) {
       requestAnimationFrame(updateTimer);
@@ -1099,7 +1089,7 @@ const startSky = holder => {
           star.parentElement.removeChild(star);
         },
       },
-      "⭐"
+      "★"
     );
 
     rotation += R() > 0.75 ? 2 : -2;
@@ -1224,7 +1214,9 @@ const startBoard = tileHolder => {
 
       if (placed === target) {
         [...document.getElementsByClassName("cell")].forEach(c => {
-          c.style.setProperty("--bopacity", 1);
+          
+          // c.style.setProperty("--bop", 1);
+          c.style.setProperty("animation-delay", `${c.classList.contains("cat") || c.classList.contains("milk") ? 200 : R(500, 1000)}ms`);
         });
 
         setTimeout(async () => {
@@ -1297,7 +1289,7 @@ const startBoard = tileHolder => {
             borderingCats.length === 0
           ) {
             // success
-            GAME_CONFIG.STAR_SPAWN_INTERVAL -= 150;
+            GAME_CONFIG.STAR_SPAWN_INTERVAL -= 200;
             round += 1;
             say("meow");
 
@@ -1306,7 +1298,7 @@ const startBoard = tileHolder => {
               else cCol++;
             } else {
               cDif += 0.07;
-              if (cDif > 0.36 && cRow < 7 && cCol < 7) {
+              if (cDif > 0.36 && cRow + cCol < 12) {
                 if (cRow < cCol) cRow++;
                 else cCol++;
                 cDif = 0.25;
@@ -1487,7 +1479,7 @@ const startBoard = tileHolder => {
             }
 
             async function angryCats() {
-              say("cats too close");
+              say("cats cannot touch even diagonally");
               return new Promise(resolve => {
                 borderingCats.forEach((c, i) => {
                   setTimeout(() => {
@@ -1733,33 +1725,37 @@ const startBoard = tileHolder => {
       colMarkers.push(marker);
     }
 
-    const bopacity = "var(--bopacity)";
+    const bop = "var(--bop)";
     const backingGrads =
       R() > 0.5
         ? [
-            `hsl(225 73% 57% / ${bopacity}), hsl(240 100% 50% / ${bopacity})`, // royalblue, blue
-            `hsl(25 90% 55% / ${bopacity}), hsl(45 100% 50% / ${bopacity})`, // sorta orangey
+            `hsl(225 73% 57% / ${bop}), hsl(240 100% 50% / ${bop})`, // royalblue, blue
+            `hsl(25 90% 55% / ${bop}), hsl(45 100% 50% / ${bop})`, // sorta orangey
           ]
         : [
-            `hsl(300 76% 72% / ${bopacity}), hsl(300 100% 25% / ${bopacity})`, // violet, purple
-            `hsl(120 100% 50% / ${bopacity}), hsl(120 100% 25% / ${bopacity})`, // lime, green
+            `hsl(300 76% 72% / ${bop}), hsl(300 100% 25% / ${bop})`, // violet, purple
+            `hsl(120 100% 50% / ${bop}), hsl(120 100% 25% / ${bop})`, // lime, green
           ];
 
     for (let row = 0; row < rowNum; row++) {
       let rowCats = 0;
       for (let col = 0; col < colNum; col++) {
+        const scale = (11 - Math.max(rowNum, colNum));
         grid[row][col] = div({
           class: "cell",
           style: `grid-area: ${row + 2} / ${col + 2} / ${row + 3} / ${
             col + 3
-          };background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20000" height="400"><filter id="a"><feTurbulence seed="${~~(
+          };background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feTurbulence seed="${~~(
             R() * 2000
-          )}" baseFrequency="2" result="noise" type="fractalNoise"/><feComponentTransfer><feFuncR tableValues="0 1" type="discrete"/><feFuncG tableValues="0 1" type="discrete"/><feFuncB tableValues="0 1" type="discrete"/><feFuncA type="linear"/></feComponentTransfer><feColorMatrix type="saturate" values="0.10"/></filter><g transform="scale(40)"><rect width="100%" height="100%" filter="url(%23a)" opacity=".15"/></g></svg>'), linear-gradient(${R()}turn, ${
+          )}" baseFrequency="2" result="noise" type="fractalNoise"/><feComponentTransfer><feFuncR tableValues="0 1" type="discrete"/><feFuncG tableValues="0 1" type="discrete"/><feFuncB tableValues="0 1" type="discrete"/><feFuncA type="linear"/></feComponentTransfer><feColorMatrix type="saturate" values="0.10"/></filter><g transform="scale(${
+            scale * scale * 0.35
+          })"><rect width="100%" height="100%" filter="url(%23a)" opacity=".1"/></g></svg>'), linear-gradient(${R()}turn, ${
             backingGrads[(row + col) % backingGrads.length]
           });
+          --bop: 0.25;
       background-color: hsl(0 0 20 / 0.1);
-      animation-delay: ${R() * 1000}ms;
-      font-size: ${(11 - Math.max(rowNum, colNum)) * 0.6}em`,
+      animation-delay: ${800 * Math.abs(row - col)/(rowNum + colNum)}ms;
+      font-size: ${scale * 0.6}em`,
           onclick: () => {
             if (
               S[row][col] !== 1 &&
@@ -1768,7 +1764,7 @@ const startBoard = tileHolder => {
               zzfx(...[2,0,261.6256,.01,.33,.07,1,1.9,,,,,,.1,,,.17,.62,.06]);
 
               grid[row][col].classList.add("cat");
-              grid[row][col].style.setProperty("--bopacity", 1);
+              grid[row][col].style.setProperty("--bop", 1);
               grid[row][col].style.setProperty("pointer-events", "none");
 
               van.add(
@@ -1784,7 +1780,7 @@ const startBoard = tileHolder => {
             } else if (grid[row][col].classList.contains("cat")) {
               grid[row][col].innerHTML = "";
               grid[row][col].classList.remove("cat");
-              grid[row][col].style.setProperty("--bopacity", 0.25);
+              grid[row][col].style.setProperty("--bop", 0.25);
               placed -= 1;
             }
           },
@@ -1797,7 +1793,7 @@ const startBoard = tileHolder => {
         if (S[row][col] == 1) {
           const toy = ["⭐️", "☁️", "🌙"][~~(R() * 3)];
           grid[row][col].classList.add("milk");
-          grid[row][col].style.setProperty("--bopacity", 1);
+          grid[row][col].style.setProperty("--bop", 1);
           van.add(
             grid[row][col],
 
