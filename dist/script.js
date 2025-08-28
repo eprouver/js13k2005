@@ -1141,14 +1141,22 @@ const startSky = holder => {
   holder.scrollIntoView({ behavior: 'smooth' });
 };
 
+let bround = 0;
+
 const startBoard = tileHolder => {
+  bround++;
+  if (bround === 2) {
+    setTimeout(() => {
+      say("Until the last cat, you can remove cats by clicking on them again.", voices[0]);
+    }, 2000);
+  }
   tile.scrollIntoView({ behavior: 'smooth' });
   let round = 0;
   /* lower is emptier */
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
     if (rowNum + colNum < 4) {
       setTimeout(() => {
-        say("Pair each charm with a cat. Tag number shows the number of cats per line");
+        say("Pair each charm with a cat. Tag number shows the number of cats per line", voices[0]);
       }, 2000);
     }
 
@@ -1588,6 +1596,9 @@ const startBoard = tileHolder => {
             }, 2000);
           }
         }, 500);
+        return true;
+      } else {
+        return false;
       }
     };
 
@@ -1754,6 +1765,7 @@ const startBoard = tileHolder => {
 
               grid[row][col].classList.add("cat");
               grid[row][col].style.setProperty("--bopacity", 1);
+              grid[row][col].style.setProperty("pointer-events", "none");
 
               van.add(
                 grid[row][col],
@@ -1762,7 +1774,9 @@ const startBoard = tileHolder => {
                 div({ class: "derot" }, Cat(9))
               );
 
-              testFinished();
+              if (!testFinished()) {
+                grid[row][col].style.setProperty("pointer-events", "auto");
+              }
             } else if (grid[row][col].classList.contains("cat")) {
               grid[row][col].innerHTML = "";
               grid[row][col].classList.remove("cat");
