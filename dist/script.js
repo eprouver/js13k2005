@@ -933,6 +933,10 @@ const startMoon = () => {
 
   say(`${currentTotalStars + starsCollected} of ${starGoal} stars collected`);
 
+  setTimeout(() => {
+    say("meow");
+  }, starsCollected * 50)
+
   setTimeout(
     () => {
       starsCollected = 0;
@@ -952,7 +956,7 @@ const startMoon = () => {
             startBoard(tile);
             startMusic();
           }, 1000);
-        }, 4500);
+        }, 5000);
       }
     },
     starsCollected * 50 + 1000
@@ -1832,7 +1836,7 @@ const rangeInner = div({ id: "rani", onclick: () => {
 const skyHolder = div();
 const moon = div(
   { id: "moon", class: "sc" },
-  div({ id: "mho" }, "You Win!"),
+  div({ id: "mho" }, "You Won!"),
   canvas({ id: "canvas-2" }),
   div(
     { class: "cho" },

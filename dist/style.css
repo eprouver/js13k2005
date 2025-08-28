@@ -59,7 +59,7 @@ canvas {
   border: none;
   box-shadow:
     0 0.3em #9eacc9,
-    0 0.3em 0.3em black;
+    0 0.3em 0.3em #4a546b;
   transition: all 0.1s ease;
   background: #ced9f2;
   min-width: 15em;
@@ -69,7 +69,7 @@ canvas {
 #start button:active {
   box-shadow:
     0 0.1em #9eacc9,
-    0 0.1em 0.1em black;
+    0 0.1em 0.1em #4a546b;
   transform: translateY(0.1em);
 }
 
