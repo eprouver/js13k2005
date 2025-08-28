@@ -940,6 +940,8 @@ const startMoon = () => {
       if (currentTotalStars >= starGoal) {
         say("You've collected all the stars!");
         document.querySelector("#mho").style.opacity = 1;
+        rangeInner.style.pointerEvents = "auto";
+        rangeInner.innerText = "More Puzzles";
       } else {
         setTimeout(() => {
           starHolder.remove();
@@ -1140,6 +1142,7 @@ const startSky = holder => {
 };
 
 const startBoard = tileHolder => {
+  tile.scrollIntoView({ behavior: 'smooth' });
   let round = 0;
   /* lower is emptier */
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
@@ -1380,7 +1383,7 @@ const startBoard = tileHolder => {
             }, 400);
           } else {
             // failure
-            say('unlucky');
+            say('oh no');
             GAME_CONFIG.STAR_SPAWN_INTERVAL += 200;
             [...document.querySelectorAll(".cell")].forEach(cell =>
               cell.style.setProperty("pointer-events", "none")
@@ -1809,7 +1812,9 @@ const startBoard = tileHolder => {
   van.add(tileHolder, holder);
 };
 
-const rangeInner = div({ id: "rani" });
+const rangeInner = div({ id: "rani", onclick: () => {
+  startBoard(tile);
+} });
 const skyHolder = div();
 const moon = div(
   { id: "moon", class: "sc" },
@@ -1838,7 +1843,6 @@ const start = div(
       {
         id: "start-btn",
         onclick: () => {
-          tile.scrollIntoView({ behavior: 'smooth' });
           startBoard(tile);
           startMusic();
         },

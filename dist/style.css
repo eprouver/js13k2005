@@ -127,7 +127,7 @@ canvas {
 
 #an {
   position: fixed;
-  bottom: 1em;
+  bottom: 3em;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -224,7 +224,7 @@ svg {
   width: 80vmin;
   gap: 3.5%;
   transform: translate3d(5vmin, -2vmin, 10em) rotateX(var(--boardRot)) rotate(45deg);
-  font-size: 2.3vmin;
+  font-size: 2.1vmin;
   transition: all 1s ease;
 }
 
