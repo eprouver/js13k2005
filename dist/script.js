@@ -950,7 +950,7 @@ const startMoon = () => {
             startBoard(tile);
             startMusic();
           }, 1000);
-        }, 5000);
+        }, 4500);
       }
     },
     starsCollected * 50 + 1000
@@ -1089,7 +1089,7 @@ const startSky = holder => {
           star.parentElement.removeChild(star);
         },
       },
-      "★"
+      "✦"
     );
 
     rotation += R() > 0.75 ? 2 : -2;
@@ -1141,7 +1141,7 @@ const startBoard = tileHolder => {
   bround++;
   if (bround === 2) {
     setTimeout(() => {
-      say("Until the last cat, you can remove cats by clicking on them again.", voices[0]);
+      say("Until the last cat, you can remove cats by clicking again.", voices[0]);
     }, 2000);
   }
   tile.scrollIntoView({ behavior: 'smooth' });
@@ -1213,12 +1213,7 @@ const startBoard = tileHolder => {
       placed += 1;
 
       if (placed === target) {
-        [...document.getElementsByClassName("cell")].forEach(c => {
-          
-          // c.style.setProperty("--bop", 1);
-          c.style.setProperty("animation-delay", `${c.classList.contains("cat") || c.classList.contains("milk") ? 200 : R(500, 1000)}ms`);
-        });
-
+        holder.style.setProperty("pointer-events", "none");
         setTimeout(async () => {
           let colCorrect;
           let rowCorrect;
@@ -1289,27 +1284,6 @@ const startBoard = tileHolder => {
             borderingCats.length === 0
           ) {
             // success
-            GAME_CONFIG.STAR_SPAWN_INTERVAL -= 200;
-            round += 1;
-            say("meow");
-
-            if (cRow < 3 || cCol < 2) {
-              if (cRow < cCol) cRow++;
-              else cCol++;
-            } else {
-              cDif += 0.07;
-              if (cDif > 0.36 && cRow + cCol < 12) {
-                if (cRow < cCol) cRow++;
-                else cCol++;
-                cDif = 0.25;
-              } else if (cDif > 0.36) {
-                cDif = 0.2;
-              }
-            }
-
-            rowMarkers
-              .concat(colMarkers)
-              .forEach(c => c.classList.add("correct"));
             zzfx(
               ...[
                 ,
@@ -1333,6 +1307,34 @@ const startBoard = tileHolder => {
                 0.04,
               ]
             );
+
+            say("meow");
+
+            [...document.getElementsByClassName("cell")].forEach(c => {
+              c.style.setProperty("--bop", 1);
+              c.style.setProperty("animation-delay", `${R(300, 1000)}ms`);           
+            });
+
+            GAME_CONFIG.STAR_SPAWN_INTERVAL -= 200;
+            round += 1;
+
+            if (cRow < 3 || cCol < 2) {
+              if (cRow < cCol) cRow++;
+              else cCol++;
+            } else {
+              cDif += 0.07;
+              if (cDif > 0.36 && cRow + cCol < 12) {
+                if (cRow < cCol) cRow++;
+                else cCol++;
+                cDif = 0.25;
+              } else if (cDif > 0.36) {
+                cDif = 0.2;
+              }
+            }
+
+            rowMarkers
+              .concat(colMarkers)
+              .forEach(c => c.classList.add("correct"));
 
             setTimeout(() => {
               [...document.getElementsByClassName("cell")]
@@ -1386,8 +1388,35 @@ const startBoard = tileHolder => {
               }, 2000);
             }, 400);
           } else {
+
+            const fsfx = [
+              0.2,
+              ,
+              10,
+              0.02,
+              0.2,
+              0.03,
+              1,
+              0.1,
+              88,
+              22,
+              ,
+              ,
+              ,
+              ,
+              145,
+              ,
+              ,
+              0.68,
+              0.03,
+              ,
+              -1493,
+            ];
             // failure
             say('oh no');
+            zzfx(
+              ...fsfx
+            );
             GAME_CONFIG.STAR_SPAWN_INTERVAL += 200;
             [...document.querySelectorAll(".cell")].forEach(cell =>
               cell.style.setProperty("pointer-events", "none")
@@ -1402,34 +1431,12 @@ const startBoard = tileHolder => {
                     counter++;
                     setTimeout(() => {
                       zzfx(
-                        ...[
-                          0.2,
-                          ,
-                          10,
-                          0.02,
-                          0.2,
-                          0.03,
-                          1,
-                          0.1,
-                          88,
-                          22,
-                          ,
-                          ,
-                          ,
-                          ,
-                          145,
-                          ,
-                          ,
-                          0.68,
-                          0.03,
-                          ,
-                          -1493,
-                        ]
+                        ...fsfx
                       );
                       markers[i].classList.add("fail");
                     }, counter * interval);
                   }
-                }
+                } 
 
                 setTimeout(() => {
                   resolve();
@@ -1444,29 +1451,7 @@ const startBoard = tileHolder => {
                 nocats.forEach((p, i) => {
                   setTimeout(() => {
                     zzfx(
-                      ...[
-                        0.2,
-                        ,
-                        10,
-                        0.02,
-                        0.2,
-                        0.03,
-                        1,
-                        0.1,
-                        88,
-                        22,
-                        ,
-                        ,
-                        ,
-                        ,
-                        145,
-                        ,
-                        ,
-                        0.68,
-                        0.03,
-                        ,
-                        -1493,
-                      ]
+                      ...fsfx
                     );
                     p[0].classList.add("fail");
                   }, i * interval);
@@ -1484,29 +1469,7 @@ const startBoard = tileHolder => {
                 borderingCats.forEach((c, i) => {
                   setTimeout(() => {
                     zzfx(
-                      ...[
-                        0.2,
-                        ,
-                        10,
-                        0.02,
-                        0.2,
-                        0.03,
-                        1,
-                        0.1,
-                        88,
-                        22,
-                        ,
-                        ,
-                        ,
-                        ,
-                        145,
-                        ,
-                        ,
-                        0.68,
-                        0.03,
-                        ,
-                        -1493,
-                      ]
+                      ...fsfx
                     );
                     c.classList.add("fail");
                   }, i * interval);
@@ -1579,6 +1542,7 @@ const startBoard = tileHolder => {
             }
 
             holder.classList.add("fail");
+
             setTimeout(() => {
               if (round === tileRounds) {
                 tile.innerHTML = "";
@@ -1729,12 +1693,12 @@ const startBoard = tileHolder => {
     const backingGrads =
       R() > 0.5
         ? [
-            `hsl(225 73% 57% / ${bop}), hsl(240 100% 50% / ${bop})`, // royalblue, blue
-            `hsl(25 90% 55% / ${bop}), hsl(45 100% 50% / ${bop})`, // sorta orangey
+            `hsl(225 63% 57% / ${bop}), hsl(240 90% 50% / ${bop})`, // royalblue, blue
+            `hsl(25 80% 55% / ${bop}), hsl(45 90% 50% / ${bop})`, // sorta orangey
           ]
         : [
-            `hsl(300 76% 72% / ${bop}), hsl(300 100% 25% / ${bop})`, // violet, purple
-            `hsl(120 100% 50% / ${bop}), hsl(120 100% 25% / ${bop})`, // lime, green
+            `hsl(300 66% 72% / ${bop}), hsl(300 90% 25% / ${bop})`, // violet, purple
+            `hsl(120 90% 50% / ${bop}), hsl(120 90% 25% / ${bop})`, // lime, green
           ];
 
     for (let row = 0; row < rowNum; row++) {
@@ -1749,11 +1713,10 @@ const startBoard = tileHolder => {
             R() * 2000
           )}" baseFrequency="2" result="noise" type="fractalNoise"/><feComponentTransfer><feFuncR tableValues="0 1" type="discrete"/><feFuncG tableValues="0 1" type="discrete"/><feFuncB tableValues="0 1" type="discrete"/><feFuncA type="linear"/></feComponentTransfer><feColorMatrix type="saturate" values="0.10"/></filter><g transform="scale(${
             scale * scale * 0.35
-          })"><rect width="100%" height="100%" filter="url(%23a)" opacity=".1"/></g></svg>'), linear-gradient(${R()}turn, ${
+          })"><rect width="100%" height="100%" filter="url(%23a)" opacity=".15"/></g></svg>'), linear-gradient(${R()}turn, ${
             backingGrads[(row + col) % backingGrads.length]
           });
-          --bop: 0.25;
-      background-color: hsl(0 0 20 / 0.1);
+          --bop: 0.3;
       animation-delay: ${800 * Math.abs(row - col)/(rowNum + colNum)}ms;
       font-size: ${scale * 0.6}em`,
           onclick: () => {
@@ -1780,7 +1743,7 @@ const startBoard = tileHolder => {
             } else if (grid[row][col].classList.contains("cat")) {
               grid[row][col].innerHTML = "";
               grid[row][col].classList.remove("cat");
-              grid[row][col].style.setProperty("--bop", 0.25);
+              grid[row][col].style.setProperty("--bop", 0.3);
               placed -= 1;
             }
           },
