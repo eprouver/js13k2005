@@ -262,8 +262,8 @@ function render() {
     });
 
     const { canvas: canvas1, gl, progDraw, bufObj } = sources[sourceIndex];
-    canvas1.width = window.innerWidth;
-    canvas1.height = window.innerHeight;
+    canvas1.width = window.innerWidth * 0.45;
+    canvas1.height = window.innerHeight * 0.45;
     canvas1.style.display = "block";
 
     gl.viewport(0, 0, canvas1.width,canvas1.height);
@@ -309,7 +309,6 @@ let defaultSettings = {
   scaleChange: 4,
   drumType: "kick",
   drumType2: null,
-
   baseNote: 60,
   drumPattern: "standard",
   measures: [],
@@ -916,6 +915,20 @@ function say(text, voice) {
   speechSynthesis.speak(u);
 }
 
+let starHolder;
+
+const endMoon = () => {
+  starHolder.remove();
+  paused = true;
+  stopMusic();
+  tile.scrollIntoView({ behavior: 'smooth' });
+
+  setTimeout(() => {
+    startBoard(tile);
+    startMusic();
+  }, 1000);
+};
+
 const startMoon = () => {
   sourceIndex = 1;
   paused = false;
@@ -923,7 +936,7 @@ const startMoon = () => {
   moon.scrollIntoView({ behavior: 'smooth' });
   slowTiempo();
 
-  const starHolder = div({ class: "star-holder" });
+  starHolder = div({ class: "star-holder" });
   van.add(moon, starHolder);
 
   for (var i = 0; i < starsCollected; i++) {
@@ -965,16 +978,7 @@ const startMoon = () => {
         rangeInner.style.pointerEvents = "auto";
         rangeInner.innerText = "More Puzzles";
       } else {
-        setTimeout(() => {
-          starHolder.remove();
-          stopMusic();
-          tile.scrollIntoView({ behavior: 'smooth' });
-
-          setTimeout(() => {
-            startBoard(tile);
-            startMusic();
-          }, 1000);
-        }, 4500);
+        setTimeout(endMoon, 4500);
       }
     },
     starsCollected * 50 + 1000
@@ -1438,9 +1442,6 @@ const startBoard = tileHolder => {
             ];
             // failure
             say('oh no');
-            zzfx(
-              ...fsfx
-            );
             GAME_CONFIG.STAR_SPAWN_INTERVAL += 400;
             [...document.querySelectorAll(".cell")].forEach(cell =>
               cell.style.setProperty("pointer-events", "none")
@@ -1551,18 +1552,15 @@ const startBoard = tileHolder => {
             );
 
             if (cRow > 2 || cCol > 2) {
-              if (cRow > cCol) cRow--;
-              else cCol--;
+              if (cRow < cCol) cCol--;
+              else cRow--;
             } else {
               cDif -= 0.15;
               if (cDif < 0.2) {
-                if (cRow > cCol) cRow--;
-                else cCol--;
+                if (cRow < cCol) cCol--;
+                else cRow--;
                 cDif = 0.4;
               }
-            }
-            if (cRow === 3 && cCol === 3) {
-              cCol = 4;
             }
 
             holder.classList.add("fail");
@@ -1813,9 +1811,7 @@ const startBoard = tileHolder => {
   van.add(tileHolder, holder);
 };
 
-const rangeInner = div({ id: "rani", onclick: () => {
-  startBoard(tile);
-} });
+const rangeInner = div({ id: "rani", onclick: endMoon });
 const skyHolder = div();
 const moon = div(
   { id: "moon", class: "sc" },
@@ -1859,14 +1855,14 @@ van.add(document.body, moon, tunnel, tile, start);
 sources.push(
   initScene(
     "canvas-1",
-`#define s iTime
+`#define s iTime * 0.75
 float h(float n){return fract(sin(n)*43758.5453123);}
 float n3(vec3 x){vec3 p=floor(x),f=fract(x);f=f*f*(3.0-2.0*f);float n=p.x+p.y*57.0+p.z*113.0;return mix(mix(mix(h(n+0.0),h(n+1.0),f.x),mix(h(n+57.0),h(n+58.0),f.x),f.y),mix(mix(h(n+113.0),h(n+114.0),f.x),mix(h(n+170.0),h(n+171.0),f.x),f.y),f.z);}
 float c(vec3 p,vec3 r){return length(p.xy-r.xy)-r.z;}
 vec2 r(vec2 k,float a){return vec2(cos(a)*k.x-sin(a)*k.y,sin(a)*k.x+cos(a)*k.y);}
 float d(vec3 p){p.z+=s*2.0;p.x+=sin(p.z*0.5)*1.5;return c(p,vec3(0.0,0.0,1.5));}
 vec4 d4(vec3 p){float t=d(p);p.z+=s*4.0;t+=n3(p*1.75-s*1.5)*0.6;vec4 r=vec4(clamp(t,0.0,1.0));r.xyz=mix(vec3(1.0,1.0,1.0),vec3(0.0,0.0,0.05),r.x);return r;}
-void mainImage(out vec4 f,in vec2 c){vec3 o=vec3(0.0,0.0,-3.0);vec3 d=normalize(vec3((-1.0+2.0*c.xy/iResolution.xy)*vec2(iResolution.x/iResolution.y,1.0),1.0));o.x+=cos(s)*1.0;d.xy=r(d.xy,s*0.05+cos(s*0.05));d.x+=sin(s-3.14*0.5)*0.5;float t=0.0;vec4 l=vec4(0.07,0.1,0.2,0.0);for(int i=0;i<220;i++){vec4 v=d4(o+d*t);v.w*=0.35;v.xyz*=v.w;l=l+v*(1.0-l.w);t+=0.1;}l.xyz/=l.w;l=sqrt(l);f=vec4(l.xyz,1.0)*0.6;}`
+void mainImage(out vec4 f,in vec2 c){vec3 o=vec3(0.0,0.0,-3.0);vec3 d=normalize(vec3((-1.0+2.0*c.xy/iResolution.xy)*vec2(iResolution.x/iResolution.y,1.0),1.0));o.x+=cos(s)*1.0;d.xy=r(d.xy,s*0.05+cos(s*0.05));d.x+=sin(s-3.14*0.5)*0.5;float t=0.0;vec4 l=vec4(0.07,0.1,0.2,0.0);for(int i=0;i<220;i++){vec4 v=d4(o+d*t);v.w*=0.35;v.xyz*=v.w;l=l+v*(1.0-l.w);t+=0.1;}l.xyz/=l.w;l=sqrt(l);f=vec4(l.xyz,1.0) * (l.y - 0.3) * (c.y / iResolution.y);}`
   )
 );
 sources.push(
