@@ -14,11 +14,11 @@
 
 body {
   overflow: hidden;
-  --plat: #8d48ac;
+  --plat: #b3a75c;
   --boardRot: 50deg;
   --baseTransition: 0.2s ease all;
   --ease1: cubic-bezier(0.329, 1.451, 0.54, 1.007);
-  background: linear-gradient(0, #d0dfff 0%, #13161e 70%, #13161e 100%);
+  background: linear-gradient(0, #a5b3d1 0%, #13161e 68%, #13161e 100%);
 }
 
 .sc {
@@ -37,7 +37,7 @@ canvas {
 }
 
 #start {
-  box-shadow: inset 0 -11vh #7f899f;
+  box-shadow: inset 0 -11vh #7f899f, inset 0 -12vh 1vh -1vh #ced9f2;
   font-size: 1.5vmin;
 }
 
@@ -49,6 +49,7 @@ canvas {
   width: 50%;
   left: 14%;
   gap: 3em;
+  animation: scalein 0.5s 0.5s ease both;
 }
 
 #start button {
@@ -80,11 +81,20 @@ canvas {
 
 #t {
   font-size: 6.3em;
-  width: 200%;
   font-family: fantasy;
   text-align: left;
-  transform: translate(-0.7em, -0.8em) rotateY(25deg);
+  animation: softr 5s ease-in-out both infinite alternate;
   color: #39445c;
+  white-space: nowrap;
+}
+
+@keyframes softr {
+  from {
+    transform: translate(-0.7em, -0.8em) rotateY(15deg);
+  }
+  to {
+    transform: translate(-0.7em, -0.8em) rotateY(-15deg);
+  }
 }
 
 #sh{
@@ -290,7 +300,6 @@ input[type="range"]::-moz-range-thumb {
   animation: moveit 1.5s var(--ease1) 1 both;
   background-color: rgb(52 56 66 / var(--bop));
   transition: all 1s ease;
-  
 }
 
 .cell:not(.milk) {
@@ -436,7 +445,7 @@ input[type="range"]::-moz-range-thumb {
   left: 0;
 }
 .c1 svg .ear {
-  animation: 10s ears linear infinite alternate;
+  animation: 4s ears linear infinite alternate;
 }
 
 .c1 .tail {
@@ -591,19 +600,11 @@ input[type="range"]::-moz-range-thumb {
   filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
 }
 
-.collected {
-  animation: collect 1s ease-in-out forwards;
+#canvas-1 {
+  mask: radial-gradient(at center 30%, rgb(0,0,0) 0%, transparent 80%);
+  mask-size: 100vw 100vh;
 }
 
 #canvas-2 {
   z-index: 2;
-}
-
-@keyframes collect {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }

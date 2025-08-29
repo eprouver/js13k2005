@@ -8,7 +8,7 @@ document.getElementById('svgs').innerHTML = `<defs>
         <ellipse cx="70" cy="82" rx="65" ry="48"/>
         <ellipse cx="77" cy="193.5" rx="50.5" ry="104.5" />
         <ellipse cx="77" cy="233" rx="70.5" ry="72" />
-        <ellipse class="ear" cx="110" cy="30" rx="15" ry="25" />
+        <ellipse class="ear" cx="105" cy="30" rx="15" ry="25" />
         <ellipse class="ear" cx="40" cy="30" rx="15" ry="25" />        
       </svg>
       <filter id="goo"
@@ -1008,9 +1008,9 @@ const startSky = holder => {
 
   const slider = input({
     type: "range",
-    min: "-5",
-    max: "5",
-    step: "0.1",
+    min: "-4",
+    max: "4",
+    step: "0.05",
     value: "0",
     oninput: e => (vel = +e.target.value),
   });
@@ -1866,7 +1866,7 @@ float c(vec3 p,vec3 r){return length(p.xy-r.xy)-r.z;}
 vec2 r(vec2 k,float a){return vec2(cos(a)*k.x-sin(a)*k.y,sin(a)*k.x+cos(a)*k.y);}
 float d(vec3 p){p.z+=s*2.0;p.x+=sin(p.z*0.5)*1.5;return c(p,vec3(0.0,0.0,1.5));}
 vec4 d4(vec3 p){float t=d(p);p.z+=s*4.0;t+=n3(p*1.75-s*1.5)*0.6;vec4 r=vec4(clamp(t,0.0,1.0));r.xyz=mix(vec3(1.0,1.0,1.0),vec3(0.0,0.0,0.05),r.x);return r;}
-void mainImage(out vec4 f,in vec2 c){vec3 o=vec3(0.0,0.0,-3.0);vec3 d=normalize(vec3((-1.0+2.0*c.xy/iResolution.xy)*vec2(iResolution.x/iResolution.y,1.0),1.0));o.x+=cos(s)*1.0;d.xy=r(d.xy,s*0.05+cos(s*0.05));d.x+=sin(s-3.14*0.5)*0.5;float t=0.0;vec4 l=vec4(0.07,0.1,0.15,0.0);for(int i=0;i<220;i++){vec4 v=d4(o+d*t);v.w*=0.35;v.xyz*=v.w;l=l+v*(1.0-l.w);t+=0.1;}l.xyz/=l.w;l=sqrt(l);f=vec4(l.xyz,1.0)*0.6;}`
+void mainImage(out vec4 f,in vec2 c){vec3 o=vec3(0.0,0.0,-3.0);vec3 d=normalize(vec3((-1.0+2.0*c.xy/iResolution.xy)*vec2(iResolution.x/iResolution.y,1.0),1.0));o.x+=cos(s)*1.0;d.xy=r(d.xy,s*0.05+cos(s*0.05));d.x+=sin(s-3.14*0.5)*0.5;float t=0.0;vec4 l=vec4(0.07,0.1,0.2,0.0);for(int i=0;i<220;i++){vec4 v=d4(o+d*t);v.w*=0.35;v.xyz*=v.w;l=l+v*(1.0-l.w);t+=0.1;}l.xyz/=l.w;l=sqrt(l);f=vec4(l.xyz,1.0)*0.6;}`
   )
 );
 sources.push(
