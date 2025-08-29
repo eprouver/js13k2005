@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <svg><defs><filter id="squig"><feTurbulence id="turbulence" baseFrequency=".01" numOctaves="3" result="noise" seed="0"/><feDisplacementMap id="displacement" in="SourceGraphic" in2="noise" scale="6"/></filter><filter id="goo"><feGaussianBlur id="blur-std" in="SourceGraphic" result="blur" stdDeviation="4"/><feColorMatrix in="blur" result="goo" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 25 -8"/><feBlend in="SourceGraphic" in2="goo"/></filter></defs></svg>
+    <svg id="svgs" style="display: none;" xmlns="http://www.w3.org/2000/svg"></svg>
 
     <script id="draw-shader-vs" type="x-shader/x-vertex">
       attribute vec2 inPos;void main(){gl_Position=vec4(inPos,0,1.0);}

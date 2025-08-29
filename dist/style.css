@@ -72,10 +72,10 @@ canvas {
 
 #start-cat {
   position: absolute;
-  bottom: 1.5em;
-  right: 16vw;
-  font-size: 4em;
-  transform: scale(2.5);
+  bottom: 4em;
+  right: 24vw;
+  font-size: 7em;
+  transform: scale(2);
 }
 
 #t {
@@ -207,10 +207,6 @@ input[type="range"]::-moz-range-thumb {
   width: 3rem;
 }
 
-svg {
-  display: none;
-}
-
 #tile {
   display: flex;
   align-items: center;
@@ -294,6 +290,7 @@ svg {
   animation: moveit 1.5s var(--ease1) 1 both;
   background-color: rgb(52 56 66 / var(--bop));
   transition: all 1s ease;
+  
 }
 
 .cell:not(.milk) {
@@ -329,11 +326,7 @@ svg {
 }
 
 .reflect .c1 {
-  top: -3em;
-  left: 1em;
-  overflow: hidden;
-  width: 20em;
-  height: 17em;
+  height: 18em;
   position: relative;
 }
 
@@ -410,7 +403,7 @@ svg {
 }
 
 .c1 div.tail-seg {
-  height: 2.5em;
+  height: 1.75em;
   width: 2.5em;
   left: 1.5em;
   animation: 5s ease-in-out wag alternate infinite;
@@ -428,82 +421,56 @@ svg {
   }
 }
 
-.body .tho {
-  position: absolute;
-  bottom: 0;
-  transform: rotateX(var(--boardRot));
-}
-
-.body .tail {
-  position: absolute;
-  left: 3em;
-  bottom: 0;
-  background: transparent;
-}
-
 .c1 {
-  font-size: 0.11em;
-  height: 24em;
+  position: absolute;
+  font-size: 0.115em;
+  width: 8em;
   filter: url(#goo);
-  animation: scalein 0.5s ease-in forwards 1;
+  height: 24em;
+  animation: scalein 0.5s ease both;
+}
+
+.c1 svg {
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+.c1 svg .ear {
+  animation: 10s ears linear infinite alternate;
+}
+
+.c1 .tail {
+  position: absolute;
+  top: 14em;
+  left: 3.5em;
+}
+
+.c1 .tail * {
+  position: relative;
+  background: black;
 }
 
 @keyframes scalein {
   from {
-    transform: scale(0) translateY(-100px);
+    /* opacity: 0; */
+    transform: scale(0.001) translateY(-20em);
   }
   to {
+    /* opacity: 1; */
     transform: scale(1);
   }
-}
-.c1 * {
-  position: relative;
-  background: #0a0a0a;
-  transform-origin: 0 0;
-}
-.c1 .head {
-  height: 5em;
-  width: 7em;
-  border-radius: 12.6em 12.6em 20em 20em / 12em 12em 8.5em 8.5em;
-  top: 2.5em;
-}
-
-.c1 .head:before,
-.c1 .head:after {
-  content: "";
-  background: inherit;
-  height: 3em;
-  width: 1.5em;
-  top: -2em;
-  position: absolute;
-  border-top-right-radius: 100%;
-  border-top-left-radius: 10px;
-  animation: ears 8s ease-in-out alternate infinite;
-  right: 65%;
 }
 
 @keyframes ears {
   90% {
-    top: -2em;
+    transform: translateY(0);
   }
   95% {
-    top: -1em;
+    transform: translateY(0.5em);
   }
   100% {
-    top: -2em;
+    transform: translateY(-0.5em);
   }
-}
-
-.c1 .head:after {
-  right: 0;
-  margin-right: 1em;
-}
-
-.c1 .body {
-  border-radius: 155px 105px 146px 146px / 275px 275px 118px 118px;
-  height: 10em;
-  width: 8em;
-  top: 2em;
 }
 
 .rm {
@@ -612,6 +579,10 @@ svg {
   bottom: -1em;
   justify-content: space-around;
   z-index: 2;
+}
+
+.cho .c1 {
+  position: relative;
 }
 
 .moon-star:hover {

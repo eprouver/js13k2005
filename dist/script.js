@@ -1,3 +1,28 @@
+/*
+        <ellipse cx="109.5" cy="287" rx="18" ry="17.5" />
+        <ellipse cx="40.5" cy="287" rx="18" ry="17.5" />
+*/
+
+document.getElementById('svgs').innerHTML = `<defs>
+      <svg id="catbod" viewBox="0 0 154 335" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="70" cy="82" rx="65" ry="48"/>
+        <ellipse cx="77" cy="193.5" rx="50.5" ry="104.5" />
+        <ellipse cx="77" cy="233" rx="70.5" ry="72" />
+        <ellipse class="ear" cx="110" cy="30" rx="15" ry="25" />
+        <ellipse class="ear" cx="40" cy="30" rx="15" ry="25" />        
+      </svg>
+      <filter id="goo"
+        x="-50%" y="-50%" width="200%" height="200%"
+        color-interpolation-filters="sRGB">
+  <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+  <feColorMatrix in="blur" result="goo" type="matrix"
+    values="1 0 0 0 0
+            0 1 0 0 0
+            0 0 1 0 0
+            0 0 0 25 -8"/>
+  <feBlend in="SourceGraphic" in2="goo" mode="normal"/>
+</filter>`;
+
 const R = (a = 1, b = 0) => Math.random() * (a - b) + b;
 
 const zzfx = (...t) => zzfxP(zzfxG(...t)),
@@ -875,8 +900,7 @@ const Tail = (count = 8) => {
 const Cat = (nSeg = 8) =>
   div(
     { class: "c1" },
-    div({ class: "head" }),
-    div({ class: "body" }, Tail(nSeg))
+    document.getElementById('catbod').cloneNode(true), Tail(nSeg)
   );
 
 let voices = [];
@@ -1417,7 +1441,7 @@ const startBoard = tileHolder => {
             zzfx(
               ...fsfx
             );
-            GAME_CONFIG.STAR_SPAWN_INTERVAL += 200;
+            GAME_CONFIG.STAR_SPAWN_INTERVAL += 400;
             [...document.querySelectorAll(".cell")].forEach(cell =>
               cell.style.setProperty("pointer-events", "none")
             );
@@ -1713,7 +1737,7 @@ const startBoard = tileHolder => {
             R() * 2000
           )}" baseFrequency="2" result="noise" type="fractalNoise"/><feComponentTransfer><feFuncR tableValues="0 1" type="discrete"/><feFuncG tableValues="0 1" type="discrete"/><feFuncB tableValues="0 1" type="discrete"/><feFuncA type="linear"/></feComponentTransfer><feColorMatrix type="saturate" values="0.10"/></filter><g transform="scale(${
             scale * scale * 0.35
-          })"><rect width="100%" height="100%" filter="url(%23a)" opacity=".15"/></g></svg>'), linear-gradient(${R()}turn, ${
+          })"><rect width="100px" height="100px" filter="url(%23a)" opacity=".15"/></g></svg>'), linear-gradient(${R()}turn, ${
             backingGrads[(row + col) % backingGrads.length]
           });
           --bop: 0.3;
@@ -1734,7 +1758,7 @@ const startBoard = tileHolder => {
                 grid[row][col],
 
                 div({ class: "om" }, div({ class: "reflect" }, Cat(0))),
-                div({ class: "derot" }, Cat(9))
+                div({ class: "derot" }, Cat(7))
               );
 
               if (!testFinished()) {
