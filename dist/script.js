@@ -284,7 +284,7 @@ function render() {
 
 
 const instruments = [
-  "triangle",
+  "sine",
   "organ",
   "bell",
   "fm",
@@ -446,10 +446,9 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
       rawSample = 0.25 * Math.sin(2 * Math.PI * frequency * t + modulator);
       break;
 
-    case "triangle":
+    case "sine":
     default:
-      rawSample =
-      2 * Math.abs(2 * (t * frequency - Math.floor(t * frequency + 0.5))) - 1;
+      rawSample = Math.sin(omega * t);
       break;
   }
 
@@ -966,28 +965,27 @@ const startMoon = () => {
 
   setTimeout(() => {
     say("meow");
+    setTimeout(
+      () => {
+        starsCollected = 0;
+
+        if (currentTotalStars >= starGoal) {
+          say("You've collected all the stars!");
+          document.querySelector("#mho").style.opacity = 1;
+          rangeInner.style.pointerEvents = "auto";
+          rangeInner.innerText = "More Puzzles";
+        } else {
+          setTimeout(endMoon, 3500);
+        }
+      },
+      1000
+    );
   }, starsCollected * 50)
-
-  setTimeout(
-    () => {
-      starsCollected = 0;
-
-      if (currentTotalStars >= starGoal) {
-        say("You've collected all the stars!");
-        document.querySelector("#mho").style.opacity = 1;
-        rangeInner.style.pointerEvents = "auto";
-        rangeInner.innerText = "More Puzzles";
-      } else {
-        setTimeout(endMoon, 4500);
-      }
-    },
-    starsCollected * 50 + 1000
-  );
 };
 
 const startSky = holder => {
   if (currentTotalStars === 0) {
-    say("Move the circle and collect the stars");
+    say("Move the circle and collect stars", voices[0]);
   }
   sourceIndex = 0;
   paused = false;
@@ -1880,7 +1878,6 @@ void mainImage(out vec4 fragColor,in vec2 c){vec2 q=c/iResolution.xy;vec2 p=q;p.
 );
 
 requestAnimationFrame(() => {
-  window.scrollTo(0, 0);
   start.scrollIntoView({ behavior: 'smooth' });
   render();
   setTimeout(() => {

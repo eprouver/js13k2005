@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   user-select: none;
+  font-family: Garamond;
 }
 
 .sc, .sc * {
@@ -82,7 +83,6 @@ canvas {
 
 #t {
   font-size: 6.3em;
-  font-family: fantasy;
   text-align: left;
   animation: softr 5s ease-in-out both infinite alternate;
   color: #39445c;
