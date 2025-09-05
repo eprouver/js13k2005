@@ -284,16 +284,16 @@ function render() {
 
 
 const instruments = [
-  "bell",
-  "organ",
-  "springy",
-  "sine",
-  "fm",
-  "meow",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
 ];
 
-const drums = ["tick", "snare", "kick"];
-const drumPatterns = ["breakbeat", "standard"];
+const drums = ["a", "c", "b"];
+const drumPatterns = ["a", "b"];
 let timeouts = [];
 
 const scales = {
@@ -303,14 +303,14 @@ const scales = {
 };
 
 let defaultSettings = {
-  instrument: "bell",
+  instrument: "a",
   scale: "blues",
   tempo: 70,
   scaleChange: 4,
-  drumType: "kick",
+  drumType: "b",
   drumType2: null,
   baseNote: 60,
-  drumPattern: "standard",
+  drumPattern: "b",
   measures: [],
   measureSFX: [,5,100,.01,.2,.09,1,2.2,-10,25,,,,,.5,,,.94,.1,,-1140],
   doubleDrum: 1,
@@ -385,15 +385,15 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
   let rawSample;
 
   switch (settings.instrument) {
-    case "meow":
-    case "springy":
+    case "f":
+    case "c":
       let semi;
       if (u < 0.35)
         semi = lerp(-2, +6, u / 0.35); // rise
       else semi = lerp(+6, -7, (u - 0.35) / 0.65); // fall
       // tiny vibrato
       const vib =
-        (settings.instrument === "springy" ? 0.01 : 0.002) *
+        (settings.instrument === "c" ? 0.01 : 0.002) *
         Math.sin(2 * Math.PI * 5 * t); // ±2% at 5 Hz
       const instFreq = frequency * Math.pow(2, semi / 12) * (1 + vib);
 
@@ -420,14 +420,14 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
       rawSample = 0.9 * s + mNoise;
       break;
 
-    case "organ":
+    case "b":
       rawSample =
         0.6 * Math.sin(omega * t) +
         0.4 * Math.sin(omega * t * 2) +
         0.2 * Math.sin(omega * t * 4);
       break;
 
-    case "bell":
+    case "a":
       let wsum = 0;
       let stum = 0;
 
@@ -441,12 +441,12 @@ const synthFunction = (sampleIndex, frequency, settings = defaultSettings) => {
       rawSample = wsum ? stum / wsum : 0;
       break;
 
-    case "fm":
+    case "e":
       const modulator = Math.sin(2 * Math.PI * frequency * 2 * t) * 100;
       rawSample = 0.25 * Math.sin(2 * Math.PI * frequency * t + modulator);
       break;
 
-    case "sine":
+    case "d":
     default:
       rawSample = Math.sin(omega * t);
       break;
@@ -568,20 +568,20 @@ const addDrumToBuffer = (timeOffset, settings = defaultSettings) => {
     let sample = 0;
 
     switch (settings.drumType) {
-      case "kick":
+      case "b":
         env = Math.exp(-140 * t);
         sample = 2 * Math.sin(2 * Math.PI * 150 * t * Math.exp(-30 * t)) * env;
         sample *= 1.5;
         break;
 
-      case "snare":
+      case "c":
         env = Math.exp(-20 * t);
         const noise = R() * 2 - 1;
         sample = (0.5 * noise + 0.5 * Math.sin(2 * Math.PI * 200 * t)) * env;
         sample *= 0.3;
         break;
 
-      case "tick":
+      case "a":
       default:
         env = Math.exp(-40 * t);
         sample = (R() * 2 - 1) * env;
@@ -608,7 +608,7 @@ const addDrumLoop = (settings = defaultSettings) => {
     let offset = i * samplesPerBeat;
 
     switch (settings.drumPattern) {
-      case "breakbeat":
+      case "a":
         if (i % 4 === 0) {
           addDrumToBuffer(offset, {
             ...settings,
@@ -629,7 +629,7 @@ const addDrumLoop = (settings = defaultSettings) => {
         }
         break;
 
-      case "standard":
+      case "b":
       default:
         addDrumToBuffer(offset, {
           ...settings,
@@ -874,7 +874,7 @@ const { div, input, button, canvas } = van.tags;
 // Tunnel Configuration
 const GAME_CONFIG = {
   SKY_TIME_LIMIT: 25000, // Game Length
-  STAR_SPAWN_INTERVAL: 600, // How often stars spawn
+  STAR_SPAWN_INTERVAL: 150, // How often stars spawn
 };
 
 let cRow = 1;
@@ -931,7 +931,7 @@ const endMoon = () => {
 const startMoon = () => {
   sourceIndex = 1;
   paused = false;
-  GAME_CONFIG.STAR_SPAWN_INTERVAL = 600;
+  GAME_CONFIG.STAR_SPAWN_INTERVAL = 150;
   moon.scrollIntoView({ behavior: 'smooth' });
   slowTiempo();
 
@@ -1104,13 +1104,17 @@ const startSky = holder => {
   // Start timer display
   requestAnimationFrame(updateTimer);
 
-  let rotation = R() * 360;
+  let rotation = R() * 720 - 360;
+
+  const interval = setInterval(() => {
+    rotation = R() * 720 - 360;
+  }, 2000);
 
   const newStar = () => {
     const ss = div(
       {
         class: "star",
-        style: `margin-top: ${Math.random() * 40}vh`,
+        style: `margin-top: ${R(20)}vh`,
         onanimationend: () => {
           star.parentElement.removeChild(star);
         },
@@ -1118,15 +1122,10 @@ const startSky = holder => {
       "✦"
     );
 
-    rotation += R() > 0.75 ? 2 : -2;
-
-    if (R() > 0.95) {
-      rotation = R() * 360;
-    }
     const star = div(
       {
         class: "st",
-        style: `transform: rotate(${R() * 360}deg)`,
+        style: `transform: rotate(${rotation + R(90)}deg)`,
       },
       ss
     );
@@ -1151,9 +1150,9 @@ const startSky = holder => {
 
     // Continue spawning stars until time runs out
     if (skyRound) {
-      requestAnimationFrame(() => {
-        setTimeout(newStar, Math.max(100, GAME_CONFIG.STAR_SPAWN_INTERVAL++));
-      });
+      setTimeout(newStar, Math.max(100, GAME_CONFIG.STAR_SPAWN_INTERVAL));
+    } else {
+      clearInterval(interval);
     }
   };
 
@@ -1176,8 +1175,14 @@ const startBoard = tileHolder => {
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
     if (rowNum + colNum < 4) {
       setTimeout(() => {
-        say("Place cats on empty tiles. Pair every cat to a charm. Tag number shows the number of cats per line", voices[0]);
-      }, 2000);
+        say("Place cats on empty tiles. Pair every cat to a charm.", voices[0]);
+      }, 1000);
+    }
+
+    if (rowNum === 2 && colNum === 2) {
+      setTimeout(() => {
+        say("Tag shows the number of cats per line", voices[0])
+      }, 1000);
     }
 
     let S, grid, rowMarkers, colMarkers;
@@ -1341,7 +1346,6 @@ const startBoard = tileHolder => {
               c.style.setProperty("animation-delay", `${R(300, 1000)}ms`);           
             });
 
-            GAME_CONFIG.STAR_SPAWN_INTERVAL -= 200;
             round += 1;
 
             if (cRow < 3 || cCol < 2) {
@@ -1440,7 +1444,7 @@ const startBoard = tileHolder => {
             ];
             // failure
             say('oh no');
-            GAME_CONFIG.STAR_SPAWN_INTERVAL += 400;
+            GAME_CONFIG.STAR_SPAWN_INTERVAL += 200;
             [...document.querySelectorAll(".cell")].forEach(cell =>
               cell.style.setProperty("pointer-events", "none")
             );
