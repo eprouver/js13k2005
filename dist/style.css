@@ -76,7 +76,7 @@ canvas {
 #start-cat {
   position: absolute;
   bottom: 4em;
-  right: 24vw;
+  right: 26vw;
   font-size: 7em;
   transform: scale(2);
 }
@@ -445,9 +445,10 @@ input[type="range"]::-moz-range-thumb {
   position: absolute;
   width: 100%;
   left: 0;
+  transform-origin: 50% 100%;
 }
 .c1 svg .ear {
-  animation: 4s ears linear infinite alternate;
+  animation: 3s ears linear infinite alternate;
 }
 
 .c1 .tail {

@@ -284,11 +284,11 @@ function render() {
 
 
 const instruments = [
-  "sine",
-  "organ",
   "bell",
-  "fm",
+  "organ",
   "springy",
+  "sine",
+  "fm",
   "meow",
 ];
 
@@ -845,7 +845,7 @@ const stopMusic = () => {
   const tempo = 100;
   defaultSettings = {
     ...defaultSettings,
-    instrument: instruments[~~(R() * instruments.length)],
+    instrument: instruments[bround % instruments.length],
     scale: Object.keys(scales).sort(() => R() - 0.5)[0],
     tempo,
     drumType: drums[~~(R() * drums.length)],
@@ -1176,7 +1176,7 @@ const startBoard = tileHolder => {
   const boardHolder = (rowNum = 2, colNum = 2, difficulty = 0.22) => {
     if (rowNum + colNum < 4) {
       setTimeout(() => {
-        say("Pair each charm with a cat. Tag number shows the number of cats per line", voices[0]);
+        say("Place cats on empty tiles. Pair every cat to a charm. Tag number shows the number of cats per line", voices[0]);
       }, 2000);
     }
 
@@ -1813,7 +1813,7 @@ const rangeInner = div({ id: "rani", onclick: endMoon });
 const skyHolder = div();
 const moon = div(
   { id: "moon", class: "sc" },
-  div({ id: "mho" }, "You Won!"),
+  div({ id: "mho" }, "You Win!"),
   canvas({ id: "canvas-2" }),
   div(
     { class: "cho" },
@@ -1845,7 +1845,7 @@ const start = div(
       "Start"
     )
   ),
-  div({ id: "start-cat" }, Cat(8))
+  div({ id: "start-cat" }, Cat(7))
 );
 
 van.add(document.body, moon, tunnel, tile, start);
